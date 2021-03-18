@@ -359,7 +359,9 @@ export default function ProductScreen({ navigation }) {
                                 flexDirection: 'column',
                                 marginTop: index !== 0 && index % 2 === 0 ? -20 : 0,
                                 margin: 4
-                            }}>
+                            }}
+                                onPress={() => navigation.navigate('ProductDetailScreen')}
+                            >
                                 {index == 1 ? <View style={{ width: 10, height: 20 }} /> : null}
                                 <Image style={{ height: 210 }} source={{ uri: item.imgUrl }} />
                                 <View style={{

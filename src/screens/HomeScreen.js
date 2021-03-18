@@ -1,10 +1,10 @@
 import React, { useRef } from 'react'
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity, Dimensions, StyleSheet } from 'react-native'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import Carousel from 'react-native-snap-carousel'
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../components/CarouselCardItem'
+import CarouselCardItem from '../components/CarouselCardItem'
 
 const data = [
     {
@@ -168,7 +168,34 @@ export default function HomeScreen({ navigation }) {
                         </ScrollView>
                     </View>
                 </View>
+                <View style={{ width: 10, height: 100 }}>
+
+                </View>
             </ScrollView>
+
+            <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity style={styles.bottomNavInactive} >
+
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.bottomNavInactive}>
+
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.bottomNavActive}>
+
+                    </TouchableOpacity>
+                </View>
+
+
+            </View>
+
         </View >
     )
 }
+
+const styles = StyleSheet.create({
+    bottomNavActive: { width: 52, height: 52, backgroundColor: 'green', borderRadius: 36, margin: 4 },
+    bottomNavInactive: { width: 36, height: 36, backgroundColor: 'green', borderRadius: 20, margin: 4 }
+})

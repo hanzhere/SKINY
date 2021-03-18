@@ -9,6 +9,7 @@ import AddInfoScreen from './src/screens/AddInfoScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ForYouScreen from './src/screens/ForYouScreen';
 import ProductScreen from './src/screens/ProductScreen';
+import ProductDetailScreen from './src/screens/ProductDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ForYouScreen" component={ForYouScreen} />
         <Stack.Screen name="ProductScreen" component={ProductScreen} />
+        <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>
