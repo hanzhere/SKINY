@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'rea
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
+import CustomButton from '../components/CustomButton'
 
 const data = [
     {
@@ -58,13 +59,39 @@ export default function ProductDetailScreen({ navigation }) {
                         <ReviewItem key={i} name={e.name} comment={e.review} />
 
                     ))}
+                    <View style={{ width: 10, height: 120 }} />
                 </View>
             </ScrollView>
+            <View style={{
+                width: DIMENSION.width,
+                position: 'absolute',
+                bottom: 0,
+                zIndex: 99,
+                backgroundColor: COLOR.WHITE
+            }}>
+                <View style={{ width: DIMENSION.width, paddingLeft: 24, paddingRight: 24, paddingBottom: 16, paddingTop: 16, flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
+                    <View style={{ flexDirection: "row" }}>
+                        <TouchableOpacity style={styles.addButtonContainer}>
+                            <Image style={{ width: 12, height: 12 }} resize12ethod="scale" resizeMode="center" source={require('../images/plus.png')} />
+                        </TouchableOpacity>
+                        <View style={{ width: 24, height: 24, backgroundColor: "transparent", justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 18, fontFamily: "Saol", color: COLOR.BLACK }}>2</Text>
+                        </View>
+                        <TouchableOpacity style={styles.addButtonContainer}>
+                            <Image style={{ width: 12, height: 12 }} resizeMethod="scale" resizeMode="center" source={require('../images/minus.png')} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={{ fontFamily: "Saol", fontSize: 24, color: COLOR.BLACK }}>150.000 VND</Text>
+                </View>
+                <CustomButton color={COLOR.GREEN} content={EN_TEXT.ADD_TO_CART} contentColor={COLOR.WHITE} press={() => { }} />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     rateDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#979797', marginRight: 8 },
-    section: { width: DIMENSION.width, padding: 24 }
+    section: { width: DIMENSION.width, padding: 24 },
+    addButtonContainer: { width: 24, height: 24, backgroundColor: COLOR.GRAY, justifyContent: 'center', alignItems: 'center' },
+    addButton: { fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }
 })

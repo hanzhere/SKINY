@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { View, Text, ScrollView, Image, TouchableOpacity, Dimensions, StyleSheet } from 'react-native'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
@@ -24,8 +24,10 @@ const data = [
     }
 ]
 
+
 export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
+    const [pageIndex, setPageIndex] = useState(1)
 
     return (
         <View style={{
@@ -33,157 +35,160 @@ export default function HomeScreen({ navigation }) {
             height: DIMENSION.height,
             backgroundColor: COLOR.WHITE
         }}>
-            <ScrollView style={{
-                width: DIMENSION.width,
-                height: DIMENSION.height,
-            }}>
-                <View
-                    style={{
-                        width: DIMENSION.width - 24 * 2,
-                        marginTop: 36,
-                        alignSelf: 'center'
-                    }}
-                >
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: 'space-between',
-                        alignItems: "flex-end"
-                    }}>
-                        <Text style={{
-                            fontFamily: "Saol",
-                            fontSize: 28,
-                            color: COLOR.BLACK
-                        }}>{EN_TEXT.NEW_ARRIVALS}</Text>
-                        <TouchableOpacity style={{
-                            flexDirection: 'row',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => navigation.navigate('ProductScreen')}
-                        >
-                            <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
-                            <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
-                        </TouchableOpacity>
-                    </View>
+            {pageIndex === 1 ? (
+                <ScrollView style={{
+                    width: DIMENSION.width,
+                    height: DIMENSION.height,
+                }}>
                     <View
                         style={{
-                            marginTop: 20,
-                            width: "100%",
-                            height: 400
-                        }}>
-                        <Carousel
-                            layout="stack"
-                            layoutCardOffset={16}
-                            ref={isCarousel}
-                            data={data}
-                            renderItem={CarouselCardItem}
-                            sliderWidth={DIMENSION.width - 12 * 2}
-                            itemWidth={DIMENSION.width - 24 * 2 - 20}
-                            hasParallaxImages={true}
-                            inactiveSlideScale={0.94}
-                            inactiveSlideOpacity={0.7}
-                            loop={true}
-                            inactiveSlideShift={10}
-                            useScrollView={true}
-                        />
-                    </View>
-                </View>
-
-                <View style={{
-                    padding: 24,
-                    paddingTop: 48
-                }}>
-                    <Text style={{
-                        fontFamily: "Saol",
-                        fontSize: 28,
-                        color: COLOR.BLACK
-                    }}>{EN_TEXT.FOR_YOU}</Text>
-
-                    <View style={{
-                        width: "100%",
-                        marginTop: 20,
-                        flexDirection: "row",
-                        justifyContent: "space-between"
-                    }}>
-                        <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100, backgroundColor: "red" }}>
-
-                        </View>
+                            width: DIMENSION.width - 24 * 2,
+                            marginTop: 36,
+                            alignSelf: 'center'
+                        }}
+                    >
                         <View style={{
-                            justifyContent: "space-between"
+                            flexDirection: "row",
+                            justifyContent: 'space-between',
+                            alignItems: "flex-end"
                         }}>
-                            <View style={{ width: DIMENSION.width * 30 / 100, height: DIMENSION.width * 30 / 100, backgroundColor: "green" }}>
-
-                            </View>
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('ForYouScreen')}
-                                style={{ width: DIMENSION.width * 30 / 100, height: 72, backgroundColor: "yellow", justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
+                            <Text style={{
+                                fontFamily: "Saol",
+                                fontSize: 28,
+                                color: COLOR.BLACK
+                            }}>{EN_TEXT.NEW_ARRIVALS}</Text>
+                            <TouchableOpacity style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => navigation.navigate('ProductScreen')}
+                            >
+                                <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
+                                <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
                             </TouchableOpacity>
                         </View>
+                        <View
+                            style={{
+                                marginTop: 20,
+                                width: "100%",
+                                height: 400
+                            }}>
+                            <Carousel
+                                layout="stack"
+                                layoutCardOffset={16}
+                                ref={isCarousel}
+                                data={data}
+                                renderItem={CarouselCardItem}
+                                sliderWidth={DIMENSION.width - 12 * 2}
+                                itemWidth={DIMENSION.width - 24 * 2 - 20}
+                                hasParallaxImages={true}
+                                inactiveSlideScale={0.94}
+                                inactiveSlideOpacity={0.7}
+                                loop={true}
+                                inactiveSlideShift={10}
+                                useScrollView={true}
+                            />
+                        </View>
                     </View>
-                </View>
 
-                <View style={{
-                    padding: 24,
-                }}>
                     <View style={{
-                        flexDirection: "row",
-                        justifyContent: 'space-between',
-                        alignItems: "flex-end"
+                        padding: 24,
+                        paddingTop: 48
                     }}>
                         <Text style={{
                             fontFamily: "Saol",
                             fontSize: 28,
                             color: COLOR.BLACK
-                        }}>{EN_TEXT.SALES}</Text>
-                        <TouchableOpacity style={{
-                            flexDirection: 'row',
-                            alignItems: 'center'
-                        }}
-                            onPress={() => navigation.navigate('ProductScreen')}
-                        >
-                            <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
-                            <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
-                        </TouchableOpacity>
+                        }}>{EN_TEXT.FOR_YOU}</Text>
+
+                        <View style={{
+                            width: "100%",
+                            marginTop: 20,
+                            flexDirection: "row",
+                            justifyContent: "space-between"
+                        }}>
+                            <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100, backgroundColor: "red" }}>
+
+                            </View>
+                            <View style={{
+                                justifyContent: "space-between"
+                            }}>
+                                <View style={{ width: DIMENSION.width * 30 / 100, height: DIMENSION.width * 30 / 100, backgroundColor: "green" }}>
+
+                                </View>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('ForYouScreen')}
+                                    style={{ width: DIMENSION.width * 30 / 100, height: 72, backgroundColor: "yellow", justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
 
                     <View style={{
-                        width: "100%",
-                        marginTop: 20,
+                        padding: 24,
                     }}>
                         <View style={{
-                            width: "100%",
-                            height: 184,
-                            backgroundColor: "yellow"
+                            flexDirection: "row",
+                            justifyContent: 'space-between',
+                            alignItems: "flex-end"
                         }}>
-
+                            <Text style={{
+                                fontFamily: "Saol",
+                                fontSize: 28,
+                                color: COLOR.BLACK
+                            }}>{EN_TEXT.SALES}</Text>
+                            <TouchableOpacity style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}
+                                onPress={() => navigation.navigate('ProductScreen')}
+                            >
+                                <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
+                                <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
+                            </TouchableOpacity>
                         </View>
 
-                        <ScrollView horizontal>
-                            <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                            <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                            <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                            <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                            <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                            <View style={{ width: 120, height: 148, backgroundColor: "red", marginTop: 12 }}></View>
-                        </ScrollView>
+                        <View style={{
+                            width: "100%",
+                            marginTop: 20,
+                        }}>
+                            <View style={{
+                                width: "100%",
+                                height: 184,
+                                backgroundColor: "yellow"
+                            }}>
+
+                            </View>
+
+                            <ScrollView horizontal>
+                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
+                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
+                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
+                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
+                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
+                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginTop: 12 }}></View>
+                            </ScrollView>
+                        </View>
                     </View>
-                </View>
-                <View style={{ width: 10, height: 100 }}>
+                    <View style={{ width: 10, height: 100 }}>
 
-                </View>
-            </ScrollView>
+                    </View>
+                </ScrollView>
+            ) : <View><Text>assadsa</Text></View>}
 
+            {}
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.bottomNavInactive} >
+                    <TouchableOpacity style={pageIndex === 0 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => setPageIndex(pageIndex => 0)} >
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.bottomNavInactive}>
+                    <TouchableOpacity style={pageIndex === 1 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => setPageIndex(pageIndex => 1)}>
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.bottomNavActive}>
+                    <TouchableOpacity style={pageIndex === 2 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => navigation.navigate('CartScreen')}>
 
                     </TouchableOpacity>
                 </View>
