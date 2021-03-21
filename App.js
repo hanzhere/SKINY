@@ -11,6 +11,8 @@ import ForYouScreen from './src/screens/ForYouScreen';
 import ProductScreen from './src/screens/ProductScreen';
 import ProductDetailScreen from './src/screens/ProductDetailScreen';
 import CartScreen from './src/screens/CartScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import OrderSuccess from './src/screens/OrderSuccess';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +40,8 @@ export default function App() {
         <Stack.Screen name="ProductScreen" component={ProductScreen} />
         <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
         <Stack.Screen name="CartScreen" component={CartScreen} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="OrderSuccessScreen" component={OrderSuccess} />
 
       </Stack.Navigator>
     </NavigationContainer>

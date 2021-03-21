@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "958958021465",
+    "project_id": "skiny-7ca0d",
+    "storage_bucket": "skiny-7ca0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958958021465:android:6f75cb6feeb9efaa68fa48",
+        "android_client_info": {
+          "package_name": "com.nguyensonha.SKINY"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958958021465-u59eeolfo86a5dimforgd8s6kkqvic8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8L_cKS3ZO929kbDorA6CuGdAJVM8P29Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958958021465-u59eeolfo86a5dimforgd8s6kkqvic8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

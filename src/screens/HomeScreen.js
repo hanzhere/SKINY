@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
-import { View, Text, ScrollView, Image, TouchableOpacity, Dimensions, StyleSheet } from 'react-native'
+import React, { useRef, useState, useEffect, } from 'react'
+import { View, Text, ScrollView, Image, TouchableOpacity, Alert, StyleSheet, BackHandler } from 'react-native'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import Carousel from 'react-native-snap-carousel'
 import CarouselCardItem from '../components/CarouselCardItem'
+import ProfileScreen from './ProfileScreen'
 
 const data = [
     {
@@ -28,6 +29,24 @@ const data = [
 export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
     const [pageIndex, setPageIndex] = useState(1)
+
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                { text: 'YES', onPress: () => BackHandler.exitApp() },
+            ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
+    }, []);
 
     return (
         <View style={{
@@ -175,7 +194,7 @@ export default function HomeScreen({ navigation }) {
 
                     </View>
                 </ScrollView>
-            ) : <View><Text>assadsa</Text></View>}
+            ) : <ProfileScreen usename="Sonha" />}
 
             {}
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
