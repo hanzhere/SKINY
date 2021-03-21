@@ -1,0 +1,141 @@
+{
+    "users": {
+        "08fbc076-6da7-491a-a89f-5dca2c751462": {
+            "user_id": "08fbc076-6da7-491a-a89f-5dca2c751462",
+            "user_name": "Sonha",
+            "user_phonenumber": "0123456789",
+            "user_username": "sonhausername",
+            "user_password": "123456789",
+            "user_skin": {
+                "skin_status": ["Black head", "Mole"],
+                "routines": ["Black head", "Mole"],
+                "skin_goals": ["Black head", "Mole"],
+                "skin_images": ""
+            },
+            "orders": {
+                "qewqeqwqeweqw": {
+                    "id": 1,
+                    "timestamp": "151354351",
+                    "total": "150.000",
+                    "status": "0",
+                    "products": ["1", "2"]
+                },
+                "2": {
+                    "id": 2,
+                    "timestamp": "151354351",
+                    "total": "150.000",
+                    "status": "0",
+                    "products": ["1", "2"]
+                }
+            }
+        }
+    },
+    "products": {
+        "1": {
+            "product_id": 1,
+            "product_image": "https://cdn.webshopapp.com/shops/125574/files/343278893/innisfree-innisfree-green-tea-seed-serum.jpg",
+            "product_name": "Green Tea Seed Serum",
+            "product_price": "150.000",
+            "product_describe": "Double-squeezed green tea and green tea seed from the Jeju island",
+            "product_sale": "0",
+            "product_rate": "5",
+            "product_reviews": {
+                "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                    "name": "Sonha",
+                    "rate": "5",
+                    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                }
+            }
+        },
+        "2": {
+            "product_id": 2,
+            "product_image": "https://adminbeauty.hvnet.vn/Upload/Files/dau-tay-trang-Innisfree-Green-Tea-FRESH-Cleansing-Oil-beauty-garden-1.jpg",
+            "product_name": "Ifress",
+            "product_price": "150.000",
+            "product_describe": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+            "product_sale": "0"
+        },
+        "3": {
+            "product_id": 3,
+            "product_image": "https://lh3.googleusercontent.com/proxy/4HGKhY0vTx5c8dc2XrJ9CE5NTBj5ln4ZS62hhzFmi4HsSWhpm8B_rXWaICTFQP81CzdsYPrgRsmkGbJd7NJfpVaSoSN2jDCtaXKnui15L5c6qVuTbvpxa0euOVCdRV_xzLCw_XpnlbV4nysQkbt_m7wLe0xHgoDZsw",
+            "product_name": "Ifress",
+            "product_price": "150.000",
+            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_sale": "0"
+        },
+        "4": {
+            "product_id": 4,
+            "product_image": "https://cochiskin.com/wp-content/uploads/2019/05/M%E1%BA%B7t-N%E1%BA%A1-%C4%90%E1%BA%A5t-S%C3%A9t-Innisfree-Super-Volcanic-Pore-Clay-Mask-2X-100ml.jpg",
+            "product_name": "Ifress",
+            "product_price": "150.000",
+            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_sale": "0"
+        },
+        "5": {
+            "product_id": 5,
+            "product_image": "https://product.hstatic.net/1000301613/product/kem-duong-am-trang-da-innisfree-jeju-cherry-blossom-tone-up-cream_72ca92804c0948ec8c720a502b689d97.jpg",
+            "product_name": "Ifress",
+            "product_price": "150.000",
+            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_sale": "0"
+        },
+        "6": {
+            "product_id": 6,
+            "product_image": "https://salt.tikicdn.com/cache/w444/ts/product/ba/28/3f/060b3bd82be1c773ae2bd8c4a937655e.jpg",
+            "product_name": "Ifress",
+            "product_price": "150.000",
+            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_sale": "0"
+        }
+    },
+    "for_user": {
+        "08fbc076-6da7-491a-a89f-5dca2c751462": {
+            "product_id": ["1", "2", "3"]
+        }
+    },
+    "sales": {
+        "images": "",
+        "products_sale": {
+            "2": {
+                "product_id": 2,
+                "product_image": "https://adminbeauty.hvnet.vn/Upload/Files/dau-tay-trang-Innisfree-Green-Tea-FRESH-Cleansing-Oil-beauty-garden-1.jpg",
+                "product_name": "Ifress",
+                "product_price": "150.000",
+                "product_describe": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+                "percent": "15"
+            },
+            "3": {
+                "product_id": 3,
+                "product_image": "https://lh3.googleusercontent.com/proxy/4HGKhY0vTx5c8dc2XrJ9CE5NTBj5ln4ZS62hhzFmi4HsSWhpm8B_rXWaICTFQP81CzdsYPrgRsmkGbJd7NJfpVaSoSN2jDCtaXKnui15L5c6qVuTbvpxa0euOVCdRV_xzLCw_XpnlbV4nysQkbt_m7wLe0xHgoDZsw",
+                "product_name": "Ifress",
+                "product_price": "150.000",
+                "product_describe": "For oil skin with Campuchia’s coconut",
+                "percent": "15"
+            },
+            "4": {
+                "product_id": 4,
+                "product_image": "https://cochiskin.com/wp-content/uploads/2019/05/M%E1%BA%B7t-N%E1%BA%A1-%C4%90%E1%BA%A5t-S%C3%A9t-Innisfree-Super-Volcanic-Pore-Clay-Mask-2X-100ml.jpg",
+                "product_name": "Ifress",
+                "product_price": "150.000",
+                "product_describe": "For oil skin with Campuchia’s coconut",
+                "percent": "15"
+            },
+            "5": {
+                "product_id": 5,
+                "product_image": "https://product.hstatic.net/1000301613/product/kem-duong-am-trang-da-innisfree-jeju-cherry-blossom-tone-up-cream_72ca92804c0948ec8c720a502b689d97.jpg",
+                "product_name": "Ifress",
+                "product_price": "150.000",
+                "product_describe": "For oil skin with Campuchia’s coconut",
+                "percent": "15"
+            },
+            "6": {
+                "product_id": 6,
+                "product_image": "https://salt.tikicdn.com/cache/w444/ts/product/ba/28/3f/060b3bd82be1c773ae2bd8c4a937655e.jpg",
+                "product_name": "Ifress",
+                "product_price": "150.000",
+                "product_describe": "For oil skin with Campuchia’s coconut",
+                "percent": "15"
+            }
+        }
+    }
+}
