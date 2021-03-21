@@ -7,6 +7,9 @@ import { EN_TEXT } from '../value/strings'
 
 import { Modalize } from 'react-native-modalize';
 import CustomTextInput from '../components/CustomTextInput'
+import { db } from '../../firebaseConfig'
+
+
 
 export default function LandingScreen({ navigation }) {
 
@@ -116,6 +119,12 @@ export default function LandingScreen({ navigation }) {
         </KeyboardAvoidingView>
     )
 
+    function storeHighScore(userId, score) {
+        db.ref('users/' + userId).push({
+            highscore: score,
+        });
+    }
+
     return (
         <View style={{
             width: DIMENSION.width,
@@ -150,7 +159,7 @@ export default function LandingScreen({ navigation }) {
                 justifyContent: "space-between"
 
             }}>
-                <CustomButton press={() => { onOpen() }} content={EN_TEXT.SIGN_IN} color={COLOR.GREEN} contentColor={COLOR.WHITE} />
+                <CustomButton press={() => { storeHighScore(123, 456) }} content={EN_TEXT.SIGN_IN} color={COLOR.GREEN} contentColor={COLOR.WHITE} />
                 <CustomButton press={() => { handleSignUpBtnPress() }} content={EN_TEXT.SIGN_UP} color={COLOR.GRAY} contentColor={COLOR.BROWN} />
             </View>
 

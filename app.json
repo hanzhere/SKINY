@@ -18,8 +18,7 @@
             "supportsTablet": true
         },
         "android": {
-            "package": "com.nguyensonha.SKINY",
-            "googleServicesFile": "./google-services.json"
+            "package": "com.nguyensonha.SKINY"
         },
         "web": {
             "favicon": "./assets/favicon.png"
