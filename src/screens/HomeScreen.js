@@ -200,15 +200,15 @@ export default function HomeScreen({ navigation }) {
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={pageIndex === 0 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => setPageIndex(pageIndex => 0)} >
-
+                        <Image source={require('../images/user.png')} style={{ width: pageIndex === 0 ? 20 : 16, height: pageIndex === 0 ? 20 : 16, marginLeft: pageIndex === 0 ? 4 : 2 }} />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={pageIndex === 1 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => setPageIndex(pageIndex => 1)}>
-
+                        <Image source={require('../images/home.png')} style={{ width: pageIndex === 1 ? 20 : 16, height: pageIndex === 1 ? 20 : 16, }} resizeMode="center" />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={pageIndex === 2 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => navigation.navigate('CartScreen')}>
-
+                        <Image source={require('../images/bag.png')} style={{ width: pageIndex === 2 ? 20 : 16, height: pageIndex === 2 ? 20 : 16, }} resizeMode="center" />
                     </TouchableOpacity>
                 </View>
 
@@ -220,6 +220,6 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    bottomNavActive: { width: 52, height: 52, backgroundColor: 'green', borderRadius: 36, margin: 4 },
-    bottomNavInactive: { width: 36, height: 36, backgroundColor: 'green', borderRadius: 20, margin: 4 }
+    bottomNavActive: { width: 52, height: 52, backgroundColor: COLOR.BROWN, borderRadius: 36, margin: 4, justifyContent: "center", alignItems: "center" },
+    bottomNavInactive: { width: 36, height: 36, backgroundColor: COLOR.LIGHT_GREEN, borderRadius: 20, margin: 4, justifyContent: "center", alignItems: "center" }
 })
