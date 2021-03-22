@@ -4,6 +4,7 @@ import CustomButton from '../components/CustomButton'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
+import { auth, db } from '../../firebaseConfig'
 import * as ImagePicker from 'expo-image-picker'
 
 export default function AddInfoScreen({ navigation }) {
@@ -75,6 +76,23 @@ export default function AddInfoScreen({ navigation }) {
         setPageIndex(pageIndex => pageIndex + 1)
     }
 
+    const handleDoneBtn = () => {
+        let skinStatusTemp = []
+        let skinGoalsTemp = []
+        let routinesTemp = []
+        let uuid = auth().currentUser.uid
+        skinStatus.filter(e => e.isChoose ? skinStatusTemp.push(e.name) : null)
+        skinGoals.filter(e => e.isChoose ? skinGoalsTemp.push(e.name) : null)
+        routines.filter(e => e.isChoose ? routinesTemp.push(e.name) : null)
+
+        // console.log(auth().currentUser.uid)
+        db.ref(`users/${uuid}/user_skin`).set({
+            skin_status: skinStatusTemp,
+            skin_goals: skinGoalsTemp,
+            routines: routinesTemp
+        }).then(() => navigation.navigate('HomeScreen'))
+    }
+
     return (
         <>
             {pageIndex > 1 ? (
@@ -131,8 +149,6 @@ export default function AddInfoScreen({ navigation }) {
                         }[pageIndex]}
                     </Text>
                 </View>
-
-
 
                 <View style={{
                     width: DIMENSION.width - 24 * 4,
@@ -265,7 +281,12 @@ export default function AddInfoScreen({ navigation }) {
                         width: DIMENSION.width
                     }}
                 >
-                    <CustomButton press={() => handleNextBtnPress()} content={pageIndex === 4 ? EN_TEXT.DONE : EN_TEXT.NEXT} color={COLOR.BROWN} contentColor={COLOR.WHITE} />
+                    {pageIndex === 4 ?
+                        <CustomButton press={() => handleDoneBtn()} content={EN_TEXT.DONE} color={COLOR.BROWN} contentColor={COLOR.WHITE} />
+                        :
+                        <CustomButton press={() => handleNextBtnPress()} content={EN_TEXT.NEXT} color={COLOR.BROWN} contentColor={COLOR.WHITE} />
+
+                    }
                 </View>
             </View>
         </>

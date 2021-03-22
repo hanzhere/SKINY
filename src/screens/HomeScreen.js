@@ -6,6 +6,7 @@ import { EN_TEXT } from '../value/strings'
 import Carousel from 'react-native-snap-carousel'
 import CarouselCardItem from '../components/CarouselCardItem'
 import ProfileScreen from './ProfileScreen'
+import { db } from '../../firebaseConfig'
 
 const data = [
     {
@@ -30,22 +31,33 @@ export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
     const [pageIndex, setPageIndex] = useState(1)
 
-    useEffect(() => {
-        const backAction = () => {
-            Alert.alert('Hold on!', 'Are you sure you want to go back?', [
-                {
-                    text: 'Cancel',
-                    onPress: () => null,
-                    style: 'cancel',
-                },
-                { text: 'YES', onPress: () => BackHandler.exitApp() },
-            ]);
-            return true;
-        };
+    const [products, setProducts] = useState()
 
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    const backAction = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+            {
+                text: 'Cancel',
+                onPress: () => null,
+                style: 'cancel',
+            },
+            { text: 'YES', onPress: () => BackHandler.exitApp() },
+        ]);
+        return true;
+    };
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+
+    useEffect(() => {
+        db.ref('products/').once('value', snapshot => {
+            let temp = snapshot.val()
+            // console.log(snapshot.val())
+            setProducts(() => snapshot.val())
+            // temp.map((e, i) => console.log(i + e.product_name))
+        })
+
 
         return () => backHandler.remove();
+
     }, []);
 
     return (
@@ -58,7 +70,9 @@ export default function HomeScreen({ navigation }) {
                 <ScrollView style={{
                     width: DIMENSION.width,
                     height: DIMENSION.height,
-                }}>
+                }}
+                    showsVerticalScrollIndicator={false}
+                >
                     <View
                         style={{
                             width: DIMENSION.width - 24 * 2,
