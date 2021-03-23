@@ -89,7 +89,7 @@ export default function ProfileScreen({ usename, navigation }) {
                         marginTop: 8,
 
                     }}>
-                        <Carousel
+                        {/* <Carousel
                             layout="default"
                             layoutCardOffset={16}
                             ref={isCarousel}
@@ -103,7 +103,7 @@ export default function ProfileScreen({ usename, navigation }) {
                             loop={true}
                             inactiveSlideShift={10}
                             useScrollView={true}
-                        />
+                        /> */}
                     </View>
                 </View>
 

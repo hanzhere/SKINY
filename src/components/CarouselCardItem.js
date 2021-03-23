@@ -15,14 +15,14 @@ const CarouselCardItem = ({ item, index }) => {
                     width: "100%",
                     height: "100%"
                 }}
-                resizeMode="cover"
+                resizeMode="center"
+                resizeMethod="scale"
             />
             <View style={{
                 position: "absolute",
                 bottom: 0,
                 width: "100%",
                 padding: 24,
-                backgroundColor: COLOR.GRAY
             }}>
                 <Text style={{
                     fontFamily: "Saol",
@@ -34,22 +34,19 @@ const CarouselCardItem = ({ item, index }) => {
                     fontFamily: "Effra",
                     fontSize: 12,
                     color: COLOR.BLACK,
-                    marginTop: 4
-                }}>{item.product_describe}</Text>
+                }} numberOfLines={1}>{item.product_describe}</Text>
                 <Text style={{
                     fontFamily: "Saol",
                     fontSize: 16,
-                    color: COLOR.BLACK,
-                    marginTop: 16
+                    color: COLOR.BLACK
                 }}>{item.product_price} VND</Text>
             </View>
-            {/* <Text style={styles.body}>{item.body}</Text> */}
         </View>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: COLOR.WHITE,
         width: "100%",
         height: "100%"
     },

@@ -6,7 +6,7 @@ import { EN_TEXT } from '../value/strings'
 import Carousel from 'react-native-snap-carousel'
 import CarouselCardItem from '../components/CarouselCardItem'
 import ProfileScreen from './ProfileScreen'
-import { db } from '../../firebaseConfig'
+import { auth, db } from '../../firebaseConfig'
 
 const data = [
     {
@@ -30,8 +30,30 @@ const data = [
 export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
     const [pageIndex, setPageIndex] = useState(1)
-
     const [products, setProducts] = useState([])
+    const [forYour, setForYour] = useState([])
+    const [forYourProductList, setForYourProductList] = useState([])
+    const [sales, setSales] = useState([])
+
+    const getProduct = () => {
+        let productList = [];
+        db.ref('products/').once('value', snapshot => {
+            let arr = snapshot.val()
+            productList = arr.filter(function (x) {
+                return x !== undefined;
+            });
+        }).then(() => setProducts(value => productList))
+    }
+
+    const getForYou = async () => {
+        let forYouList = [];
+        let uid = auth().currentUser.uid
+        await db.ref(`for_user/${uid}`).once('value', snapshot => {
+            forYouList = snapshot.val().product_id
+            //  
+            // console.log(arr.product_id)
+        }).then(() => setForYour(value => forYouList))
+    }
 
     const backAction = () => {
         Alert.alert('Hold on!', 'Are you sure you want to go back?', [
@@ -46,17 +68,20 @@ export default function HomeScreen({ navigation }) {
     }
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
 
-    const getProduct = () => {
-        db.ref('products/').once('value', snapshot => {
-            setProducts(snapshot.val())
+    const getForYouProductList = () => {
+        let forYouList = []
+        console.log("called")
+        forYour.map(e => {
+            products.map(pe => { e == pe.product_id ? forYouList.push(pe) : null })
         })
+        setForYourProductList(value => forYouList)
     }
 
     useEffect(() => {
         getProduct()
+        getForYou().then(getForYouProductList())
         return () => backHandler.remove()
-
-    }, [products]);
+    }, []);
 
     return (
         <View style={{
@@ -64,6 +89,7 @@ export default function HomeScreen({ navigation }) {
             height: DIMENSION.height,
             backgroundColor: COLOR.WHITE
         }}>
+            {console.log(forYourProductList)}
             {pageIndex === 1 ? (
                 <ScrollView style={{
                     width: DIMENSION.width,
@@ -104,8 +130,6 @@ export default function HomeScreen({ navigation }) {
                                 width: "100%",
                                 height: 400
                             }}>
-                            {console.log(products)}
-                            {console.log(data)}
                             <Carousel
                                 layout="stack"
                                 layoutCardOffset={16}
@@ -140,19 +164,20 @@ export default function HomeScreen({ navigation }) {
                             flexDirection: "row",
                             justifyContent: "space-between"
                         }}>
-                            <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100, backgroundColor: "red" }}>
-
+                            <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100 }}>
+                                <Image source={{ uri: forYourProductList[0].product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
+                                {/* {console.log(products)} */}
                             </View>
                             <View style={{
                                 justifyContent: "space-between"
                             }}>
-                                <View style={{ width: DIMENSION.width * 30 / 100, height: DIMENSION.width * 30 / 100, backgroundColor: "green" }}>
-
+                                <View style={{ width: DIMENSION.width * 30 / 100, height: DIMENSION.width * 30 / 100 }}>
+                                    <Image source={{ uri: forYourProductList[1].product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
                                 </View>
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate('ForYouScreen')}
-                                    style={{ width: DIMENSION.width * 30 / 100, height: 72, backgroundColor: "yellow", justifyContent: "center", alignItems: "center" }}>
-                                    <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
+                                    onPress={() => navigation.navigate('ForYouScreen', { forYourProductList: forYourProductList })}
+                                    style={{ width: DIMENSION.width * 30 / 100, height: 72, backgroundColor: COLOR.BROWN, justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.WHITE }}>{EN_TEXT.SEE_ALL}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
