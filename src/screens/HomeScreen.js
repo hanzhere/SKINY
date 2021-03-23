@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
     const [pageIndex, setPageIndex] = useState(1)
 
-    const [products, setProducts] = useState()
+    const [products, setProducts] = useState([])
 
     const backAction = () => {
         Alert.alert('Hold on!', 'Are you sure you want to go back?', [
@@ -41,24 +41,22 @@ export default function HomeScreen({ navigation }) {
                 style: 'cancel',
             },
             { text: 'YES', onPress: () => BackHandler.exitApp() },
-        ]);
-        return true;
-    };
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        ])
+        return true
+    }
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
 
+    const getProduct = () => {
+        db.ref('products/').once('value', snapshot => {
+            setProducts(snapshot.val())
+        })
+    }
 
     useEffect(() => {
-        db.ref('products/').once('value', snapshot => {
-            let temp = snapshot.val()
-            // console.log(snapshot.val())
-            setProducts(() => snapshot.val())
-            // temp.map((e, i) => console.log(i + e.product_name))
-        })
+        getProduct()
+        return () => backHandler.remove()
 
-
-        return () => backHandler.remove();
-
-    }, []);
+    }, [products]);
 
     return (
         <View style={{
@@ -106,11 +104,13 @@ export default function HomeScreen({ navigation }) {
                                 width: "100%",
                                 height: 400
                             }}>
+                            {console.log(products)}
+                            {console.log(data)}
                             <Carousel
                                 layout="stack"
                                 layoutCardOffset={16}
                                 ref={isCarousel}
-                                data={data}
+                                data={products}
                                 renderItem={CarouselCardItem}
                                 sliderWidth={DIMENSION.width - 12 * 2}
                                 itemWidth={DIMENSION.width - 24 * 2 - 20}

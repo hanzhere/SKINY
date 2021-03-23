@@ -10,7 +10,7 @@ const CarouselCardItem = ({ item, index }) => {
     return (
         <View style={styles.container} key={index}>
             <Image
-                source={{ uri: item.imgUrl }}
+                source={{ uri: item.product_image }}
                 style={{
                     width: "100%",
                     height: "100%"
@@ -29,19 +29,19 @@ const CarouselCardItem = ({ item, index }) => {
                     fontSize: 24,
                     color: COLOR.BLACK
 
-                }}>Name</Text>
+                }}>{item.product_name}</Text>
                 <Text style={{
                     fontFamily: "Effra",
                     fontSize: 12,
                     color: COLOR.BLACK,
                     marginTop: 4
-                }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit,lore magna aliqua.</Text>
+                }}>{item.product_describe}</Text>
                 <Text style={{
                     fontFamily: "Saol",
                     fontSize: 16,
                     color: COLOR.BLACK,
                     marginTop: 16
-                }}>150.000VND</Text>
+                }}>{item.product_price} VND</Text>
             </View>
             {/* <Text style={styles.body}>{item.body}</Text> */}
         </View>
