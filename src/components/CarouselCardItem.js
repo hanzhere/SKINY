@@ -33,7 +33,7 @@ const CarouselCardItem = ({ item, index }) => {
                 <Text style={{
                     fontFamily: "Effra",
                     fontSize: 12,
-                    color: COLOR.BLACK,
+                    color: COLOR.GRAY,
                 }} numberOfLines={1}>{item.product_describe}</Text>
                 <Text style={{
                     fontFamily: "Saol",

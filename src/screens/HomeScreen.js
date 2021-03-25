@@ -8,25 +8,6 @@ import CarouselCardItem from '../components/CarouselCardItem'
 import ProfileScreen from './ProfileScreen'
 import { auth, db } from '../../firebaseConfig'
 
-const data = [
-    {
-        title: "Aenean leo",
-        body: "Ut tincidunt tincidunt erat. Sed cursus turpis vitae tortor. Quisque malesuada placerat nisl. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
-        imgUrl: "https://picsum.photos/id/11/200/300"
-    },
-    {
-        title: "In turpis",
-        body: "Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ",
-        imgUrl: "https://picsum.photos/id/10/200/300"
-    },
-    {
-        title: "Lorem Ipsum",
-        body: "Phasellus ullamcorper ipsum rutrum nunc. Nullam quis ante. Etiam ultricies nisi vel augue. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.",
-        imgUrl: "https://picsum.photos/id/12/200/300"
-    }
-]
-
-
 export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
     const [pageIndex, setPageIndex] = useState(1)
@@ -35,24 +16,33 @@ export default function HomeScreen({ navigation }) {
     const [forYourProductList, setForYourProductList] = useState([])
     const [sales, setSales] = useState([])
 
-    const getProduct = () => {
+    const getProduct = async () => {
         let productList = [];
-        db.ref('products/').once('value', snapshot => {
+        let list = [];
+        let uid = auth().currentUser.uid
+
+        await db.ref('products/').once('value', snapshot => {
             let arr = snapshot.val()
             productList = arr.filter(function (x) {
                 return x !== undefined;
             });
-        }).then(() => setProducts(value => productList))
+
+            db.ref(`for_user/${uid}`).once('value', snapshot => {
+                snapshot.val().product_id.map(e => {
+                    productList.map(pe => {
+                        e == pe.product_id ? (list.push(pe)) : null
+                    }),
+                        setForYourProductList(() => list)
+
+                })
+            })
+        }).then(() => { setProducts(() => productList) })
     }
 
-    const getForYou = async () => {
-        let forYouList = [];
-        let uid = auth().currentUser.uid
-        await db.ref(`for_user/${uid}`).once('value', snapshot => {
-            forYouList = snapshot.val().product_id
-            //  
-            // console.log(arr.product_id)
-        }).then(() => setForYour(value => forYouList))
+    const getSales = () => {
+        db.ref('sales/').once('value', snapshot => {
+            setSales(() => snapshot.val())
+        }).catch(e => console.error(e))
     }
 
     const backAction = () => {
@@ -68,18 +58,9 @@ export default function HomeScreen({ navigation }) {
     }
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
 
-    const getForYouProductList = () => {
-        let forYouList = []
-        console.log("called")
-        forYour.map(e => {
-            products.map(pe => { e == pe.product_id ? forYouList.push(pe) : null })
-        })
-        setForYourProductList(value => forYouList)
-    }
-
     useEffect(() => {
         getProduct()
-        getForYou().then(getForYouProductList())
+        getSales()
         return () => backHandler.remove()
     }, []);
 
@@ -89,7 +70,6 @@ export default function HomeScreen({ navigation }) {
             height: DIMENSION.height,
             backgroundColor: COLOR.WHITE
         }}>
-            {console.log(forYourProductList)}
             {pageIndex === 1 ? (
                 <ScrollView style={{
                     width: DIMENSION.width,
@@ -118,7 +98,11 @@ export default function HomeScreen({ navigation }) {
                                 flexDirection: 'row',
                                 alignItems: 'center'
                             }}
-                                onPress={() => navigation.navigate('ProductScreen')}
+                                onPress={() => navigation.navigate('ProductScreen', {
+                                    pageIndex: 0,
+                                    products: products,
+                                    sales: sales
+                                })}
                             >
                                 <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
                                 <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
@@ -165,14 +149,14 @@ export default function HomeScreen({ navigation }) {
                             justifyContent: "space-between"
                         }}>
                             <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100 }}>
-                                <Image source={{ uri: forYourProductList[0].product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
-                                {/* {console.log(products)} */}
+                                <Image source={{ uri: forYourProductList[0]?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
+                                {console.log(forYourProductList)}
                             </View>
                             <View style={{
                                 justifyContent: "space-between"
                             }}>
                                 <View style={{ width: DIMENSION.width * 30 / 100, height: DIMENSION.width * 30 / 100 }}>
-                                    <Image source={{ uri: forYourProductList[1].product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
+                                    <Image source={{ uri: forYourProductList[1]?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
                                 </View>
                                 <TouchableOpacity
                                     onPress={() => navigation.navigate('ForYouScreen', { forYourProductList: forYourProductList })}
@@ -200,7 +184,11 @@ export default function HomeScreen({ navigation }) {
                                 flexDirection: 'row',
                                 alignItems: 'center'
                             }}
-                                onPress={() => navigation.navigate('ProductScreen')}
+                                onPress={() => navigation.navigate('ProductScreen', {
+                                    pageIndex: 1,
+                                    products: products,
+                                    sales: sales
+                                })}
                             >
                                 <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
                                 <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
@@ -216,16 +204,28 @@ export default function HomeScreen({ navigation }) {
                                 height: 184,
                                 backgroundColor: "yellow"
                             }}>
+                                <Image source={{ uri: sales?.images }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
 
                             </View>
 
                             <ScrollView horizontal>
-                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }}></View>
-                                <View style={{ width: 120, height: 148, backgroundColor: "red", marginTop: 12 }}></View>
+                                {sales?.products_sale?.map((e, i) => (
+                                    <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }} key={i}>
+                                        <Image source={{ uri: e?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" resizeMethod="scale" />
+                                        <View style={{
+                                            padding: 12,
+                                            position: "absolute",
+                                            bottom: 0
+                                        }}>
+                                            <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{e?.product_name}</Text>
+                                            <Text style={{ fontFamily: "Saol", fontSize: 10, color: COLOR.BLACK }}>{e?.product_price} VND</Text>
+                                        </View>
+                                        <View style={{ padding: 4, paddingRight: 8, paddingLeft: 8, backgroundColor: COLOR.BROWN, position: "absolute", top: 0, right: 0 }}>
+                                            <Text style={{ fontFamily: "Saol", fontSize: 10, color: COLOR.WHITE }}>{e?.percent}%</Text>
+                                        </View>
+                                    </View>
+                                )
+                                )}
                             </ScrollView>
                         </View>
                     </View>
@@ -235,7 +235,6 @@ export default function HomeScreen({ navigation }) {
                 </ScrollView>
             ) : <ProfileScreen usename="Sonha" />}
 
-            {}
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={pageIndex === 0 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => setPageIndex(pageIndex => 0)} >
@@ -256,8 +255,8 @@ export default function HomeScreen({ navigation }) {
 
         </View >
     )
-}
 
+}
 const styles = StyleSheet.create({
     bottomNavActive: { width: 52, height: 52, backgroundColor: COLOR.BROWN, borderRadius: 36, margin: 4, justifyContent: "center", alignItems: "center" },
     bottomNavInactive: { width: 36, height: 36, backgroundColor: COLOR.LIGHT_GREEN, borderRadius: 20, margin: 4, justifyContent: "center", alignItems: "center" }

@@ -90,10 +90,10 @@ export default function AddInfoScreen({ navigation }) {
             skin_status: skinStatusTemp,
             skin_goals: skinGoalsTemp,
             routines: routinesTemp
-        }).then(() => navigation.navigate('HomeScreen'))
-        db.ref(`for_user/${uuid}`).set({
+        }).then(() => db.ref(`for_user/${uuid}`).set({
             product_id: ['1', '2', '4', '5', '6']
-        })
+        }).then(() => navigation.navigate('HomeScreen')))
+
     }
 
     return (

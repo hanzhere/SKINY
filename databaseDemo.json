@@ -1,140 +1,237 @@
 {
-    "users": {
-        "08fbc076-6da7-491a-a89f-5dca2c751462": {
-            "user_id": "08fbc076-6da7-491a-a89f-5dca2c751462",
-            "user_name": "Sonha",
-            "user_phonenumber": "0123456789",
-            "user_username": "sonhausername",
-            "user_password": "123456789",
-            "user_skin": {
-                "skin_status": ["Black head", "Mole"],
-                "routines": ["Black head", "Mole"],
-                "skin_goals": ["Black head", "Mole"],
-                "skin_images": ""
-            },
-            "orders": {
-                "qewqeqwqeweqw": {
-                    "id": 1,
-                    "timestamp": "151354351",
-                    "total": "150.000",
-                    "status": "0",
-                    "products": ["1", "2"]
-                },
-                "2": {
-                    "id": 2,
-                    "timestamp": "151354351",
-                    "total": "150.000",
-                    "status": "0",
-                    "products": ["1", "2"]
-                }
-            }
+    "for_user": {
+        "06vQnx0vwXVn5kQgpEoRMU3Kkiy1": {
+            "product_id": ["1", "2", "4", "5", "6"]
+        },
+        "NQu1qZ7xfkNO91oPZUPJ5Qgfd632": {
+            "product_id": ["1", "2", "4", "5", "6"]
+        },
+        "zkBEyRwkVigsXSNxGHc1L2A07OB3": {
+            "product_id": ["1", "2", "4", "5", "6"]
         }
     },
-    "products": {
-        "1": {
+    "products": [
+        null,
+        {
+            "product_describe": "Double-squeezed green tea and green tea seed from the Jeju island",
             "product_id": 1,
             "product_image": "https://cdn.webshopapp.com/shops/125574/files/343278893/innisfree-innisfree-green-tea-seed-serum.jpg",
             "product_name": "Green Tea Seed Serum",
-            "product_price": "150.000",
-            "product_describe": "Double-squeezed green tea and green tea seed from the Jeju island",
-            "product_sale": "0",
+            "product_price": 150000,
             "product_rate": "5",
             "product_reviews": {
                 "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     "name": "Sonha",
-                    "rate": "5",
-                    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    "rate": "5"
                 }
-            }
-        },
-        "2": {
-            "product_id": 2,
-            "product_image": "https://adminbeauty.hvnet.vn/Upload/Files/dau-tay-trang-Innisfree-Green-Tea-FRESH-Cleansing-Oil-beauty-garden-1.jpg",
-            "product_name": "Ifress",
-            "product_price": "150.000",
-            "product_describe": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+            },
             "product_sale": "0"
         },
-        "3": {
+        {
+            "product_describe": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+            "product_id": 2,
+            "product_image": "https://adminbeauty.hvnet.vn/Upload/Files/dau-tay-trang-Innisfree-Green-Tea-FRESH-Cleansing-Oil-beauty-garden-1.jpg",
+            "product_name": "Ifressssss",
+            "product_price": 150000,
+            "product_reviews": {
+                "dfcadsfqwe": {
+                    "comment": "asdasfas",
+                    "name": "sonha"
+                },
+                "qweqweqwe": {
+                    "comment": "asd",
+                    "name": "wqeoiu"
+                }
+            },
+            "product_sale": "0"
+        },
+        {
+            "product_describe": "For oil skin with Campuchia’s coconut",
             "product_id": 3,
             "product_image": "https://lh3.googleusercontent.com/proxy/4HGKhY0vTx5c8dc2XrJ9CE5NTBj5ln4ZS62hhzFmi4HsSWhpm8B_rXWaICTFQP81CzdsYPrgRsmkGbJd7NJfpVaSoSN2jDCtaXKnui15L5c6qVuTbvpxa0euOVCdRV_xzLCw_XpnlbV4nysQkbt_m7wLe0xHgoDZsw",
             "product_name": "Ifress",
-            "product_price": "150.000",
-            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_price": 150000,
+            "product_reviews": {
+                "asdsad": {
+                    "comment": "asdsadas",
+                    "name": "asdasda"
+                }
+            },
             "product_sale": "0"
         },
-        "4": {
+        {
+            "product_describe": "For oil skin with Campuchia’s coconut",
             "product_id": 4,
             "product_image": "https://cochiskin.com/wp-content/uploads/2019/05/M%E1%BA%B7t-N%E1%BA%A1-%C4%90%E1%BA%A5t-S%C3%A9t-Innisfree-Super-Volcanic-Pore-Clay-Mask-2X-100ml.jpg",
             "product_name": "Ifress",
-            "product_price": "150.000",
-            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_price": 150000,
+            "product_reviews": {
+                "asdasdqwe": {
+                    "comment": "asd21qw",
+                    "name": "qwe"
+                }
+            },
             "product_sale": "0"
         },
-        "5": {
+        {
+            "product_describe": "For oil skin with Campuchia’s coconut",
             "product_id": 5,
             "product_image": "https://product.hstatic.net/1000301613/product/kem-duong-am-trang-da-innisfree-jeju-cherry-blossom-tone-up-cream_72ca92804c0948ec8c720a502b689d97.jpg",
             "product_name": "Ifress",
-            "product_price": "150.000",
-            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_price": 150000,
+            "product_reviews": {
+                "qwewqe": {
+                    "comment": "asdasqwe",
+                    "name": "65q4we1"
+                }
+            },
             "product_sale": "0"
         },
-        "6": {
+        {
+            "product_describe": "For oil skin with Campuchia’s coconut",
             "product_id": 6,
             "product_image": "https://salt.tikicdn.com/cache/w444/ts/product/ba/28/3f/060b3bd82be1c773ae2bd8c4a937655e.jpg",
             "product_name": "Ifress",
-            "product_price": "150.000",
-            "product_describe": "For oil skin with Campuchia’s coconut",
+            "product_price": 150000,
+            "product_reviews": {
+                "asdqwe": {
+                    "comment": "asdiqhwd",
+                    "name": "asdqwrasd"
+                }
+            },
             "product_sale": "0"
         }
-    },
-    "for_user": {
-        "08fbc076-6da7-491a-a89f-5dca2c751462": {
-            "product_id": ["1", "2", "3"]
-        }
-    },
+    ],
     "sales": {
-        "images": "",
-        "products_sale": {
-            "2": {
+        "images": "https://static.vecteezy.com/system/resources/previews/000/688/908/original/flash-sale-banner-template-with-shopping-bags-vector.jpg",
+        "products_sale": [
+            null,
+            null,
+            {
+                "percent": "15",
+                "product_describe": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
                 "product_id": 2,
                 "product_image": "https://adminbeauty.hvnet.vn/Upload/Files/dau-tay-trang-Innisfree-Green-Tea-FRESH-Cleansing-Oil-beauty-garden-1.jpg",
                 "product_name": "Ifress",
-                "product_price": "150.000",
-                "product_describe": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
-                "percent": "15"
+                "product_price": 150000,
+                "product_reviews": {
+                    "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "name": "Sonha",
+                        "rate": "5"
+                    }
+                }
             },
-            "3": {
+            {
+                "percent": "15",
+                "product_describe": "For oil skin with Campuchia’s coconut",
                 "product_id": 3,
                 "product_image": "https://lh3.googleusercontent.com/proxy/4HGKhY0vTx5c8dc2XrJ9CE5NTBj5ln4ZS62hhzFmi4HsSWhpm8B_rXWaICTFQP81CzdsYPrgRsmkGbJd7NJfpVaSoSN2jDCtaXKnui15L5c6qVuTbvpxa0euOVCdRV_xzLCw_XpnlbV4nysQkbt_m7wLe0xHgoDZsw",
                 "product_name": "Ifress",
-                "product_price": "150.000",
-                "product_describe": "For oil skin with Campuchia’s coconut",
-                "percent": "15"
+                "product_price": 150000,
+                "product_reviews": {
+                    "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "name": "Sonha",
+                        "rate": "5"
+                    }
+                }
             },
-            "4": {
+            {
+                "percent": "15",
+                "product_describe": "For oil skin with Campuchia’s coconut",
                 "product_id": 4,
                 "product_image": "https://cochiskin.com/wp-content/uploads/2019/05/M%E1%BA%B7t-N%E1%BA%A1-%C4%90%E1%BA%A5t-S%C3%A9t-Innisfree-Super-Volcanic-Pore-Clay-Mask-2X-100ml.jpg",
                 "product_name": "Ifress",
-                "product_price": "150.000",
-                "product_describe": "For oil skin with Campuchia’s coconut",
-                "percent": "15"
+                "product_price": 150000,
+                "product_reviews": {
+                    "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "name": "Sonha",
+                        "rate": "5"
+                    }
+                }
             },
-            "5": {
+            {
+                "percent": "15",
+                "product_describe": "For oil skin with Campuchia’s coconut",
                 "product_id": 5,
                 "product_image": "https://product.hstatic.net/1000301613/product/kem-duong-am-trang-da-innisfree-jeju-cherry-blossom-tone-up-cream_72ca92804c0948ec8c720a502b689d97.jpg",
                 "product_name": "Ifress",
-                "product_price": "150.000",
-                "product_describe": "For oil skin with Campuchia’s coconut",
-                "percent": "15"
+                "product_price": 150000,
+                "product_reviews": {
+                    "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "name": "Sonha",
+                        "rate": "5"
+                    }
+                }
             },
-            "6": {
+            {
+                "percent": "15",
+                "product_describe": "For oil skin with Campuchia’s coconut",
                 "product_id": 6,
                 "product_image": "https://salt.tikicdn.com/cache/w444/ts/product/ba/28/3f/060b3bd82be1c773ae2bd8c4a937655e.jpg",
                 "product_name": "Ifress",
-                "product_price": "150.000",
-                "product_describe": "For oil skin with Campuchia’s coconut",
-                "percent": "15"
+                "product_price": 150000,
+                "product_reviews": {
+                    "08fbc076-6da7-491a-a89f-5dca2c751462": {
+                        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "name": "Sonha",
+                        "rate": "5"
+                    }
+                }
+            }
+        ]
+    },
+    "users": {
+        "06vQnx0vwXVn5kQgpEoRMU3Kkiy1": {
+            "user_email": "Jqgs@gmail.com",
+            "user_id": "06vQnx0vwXVn5kQgpEoRMU3Kkiy1",
+            "user_name": "Uio",
+            "user_password": "Ysgsuvahs",
+            "user_phonenumber": "",
+            "user_skin": {
+                "routines": ["Routine", "Mole", "Bac"],
+                "skin_goals": ["Skingoal fat", "Bac", "Abc"],
+                "skin_status": ["Black hole", "Lo chan long to"]
+            }
+        },
+        "NQu1qZ7xfkNO91oPZUPJ5Qgfd632": {
+            "user_email": "Sh@gmail.com",
+            "user_id": "NQu1qZ7xfkNO91oPZUPJ5Qgfd632",
+            "user_name": "Sonha",
+            "user_password": "123456",
+            "user_phonenumber": "",
+            "user_skin": {
+                "routines": ["Routine", "Mole", "Bca"],
+                "skin_goals": ["Bac"],
+                "skin_status": ["Mole", "Lo chan long to", "Nhieu long"]
+            }
+        },
+        "uU82wSb9FWQjMhZ28RaPmq0nM9h2": {
+            "user_email": "Sonha@gmail.com",
+            "user_id": "uU82wSb9FWQjMhZ28RaPmq0nM9h2",
+            "user_name": "SonHa",
+            "user_password": "123456",
+            "user_phonenumber": "",
+            "user_skin": {
+                "routines": ["Mole", "Bac", "Abc"],
+                "skin_goals": ["Skingoal fat", "Bca"],
+                "skin_status": ["Black hole", "Oil Skin", "Mole"]
+            }
+        },
+        "zkBEyRwkVigsXSNxGHc1L2A07OB3": {
+            "user_email": "A@aa.aa",
+            "user_id": "zkBEyRwkVigsXSNxGHc1L2A07OB3",
+            "user_name": "Sinha",
+            "user_password": "123456",
+            "user_phonenumber": "",
+            "user_skin": {
+                "routines": ["Mole", "Bac", "Abc"],
+                "skin_goals": ["Mole", "Bac", "Bca"],
+                "skin_status": ["Black hole", "Oil Skin", "Mole"]
             }
         }
     }

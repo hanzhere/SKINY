@@ -283,8 +283,10 @@ const data3 = [
     }
 ]
 
-export default function ProductScreen({ navigation }) {
-    const [pageIndex, setPageIndex] = useState(0)
+export default function ProductScreen({ navigation, route }) {
+    const [pageIndex, setPageIndex] = useState(route.params.pageIndex)
+    const { products } = route.params
+    const { sales } = route.params
 
     const handlePage1 = () => {
         setPageIndex(0)
@@ -300,6 +302,7 @@ export default function ProductScreen({ navigation }) {
 
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
+            {console.log(sales)}
             <View style={{ width: "100%", paddingLeft: 24, paddingRight: 24, paddingBottom: 24, paddingTop: 24, alignItems: 'center' }}>
                 <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24 }}
                     onPress={() => navigation.goBack('HomeScreen')}>
@@ -316,7 +319,7 @@ export default function ProductScreen({ navigation }) {
                     marginLeft: 24,
                     marginRight: 24,
                     flexDirection: "row",
-                    justifyContent: 'space-between',
+                    justifyContent: 'space-around',
 
                 }}>
                     <TouchableOpacity onPress={() => handlePage1()}>
@@ -325,6 +328,7 @@ export default function ProductScreen({ navigation }) {
                             fontSize: 20,
                             color: pageIndex == 0 ? COLOR.BLACK : COLOR.GRAY
                         }}>{EN_TEXT.ALL_PRODUCT}</Text>
+                        {pageIndex == 0 ? <View style={{ width: "100%", height: 1, backgroundColor: COLOR.BROWN, marginTop: 4 }} /> : null}
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => handlePage2()}>
@@ -333,15 +337,9 @@ export default function ProductScreen({ navigation }) {
                             fontSize: 20,
                             color: pageIndex == 1 ? COLOR.BLACK : COLOR.GRAY
                         }}>{EN_TEXT.SALES}</Text>
+                        {pageIndex == 1 ? <View style={{ width: "100%", height: 1, backgroundColor: COLOR.BROWN, marginTop: 4 }} /> : null}
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => handlePage3()}>
-                        <Text style={{
-                            fontFamily: "Saol",
-                            fontSize: 20,
-                            color: pageIndex == 2 ? COLOR.BLACK : COLOR.GRAY
-                        }}>{EN_TEXT.TOP_SELLING}</Text>
-                    </TouchableOpacity>
                 </View>
 
                 <View style={{
@@ -352,7 +350,7 @@ export default function ProductScreen({ navigation }) {
                 }}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={pageIndex == 0 ? data1 : pageIndex == 1 ? data2 : data3}
+                        data={pageIndex == 0 ? products : pageIndex == 1 ? sales.products_sale : data3}
                         renderItem={({ item, index }) => (
                             <TouchableOpacity style={{
                                 flex: 1,
@@ -360,23 +358,34 @@ export default function ProductScreen({ navigation }) {
                                 marginTop: index !== 0 && index % 2 === 0 ? -20 : 0,
                                 margin: 4
                             }}
-                                onPress={() => navigation.navigate('ProductDetailScreen')}
+                                onPress={() => navigation.navigate('ProductDetailScreen', {
+                                    item: item
+                                })}
                             >
                                 {index == 1 ? <View style={{ width: 10, height: 20 }} /> : null}
-                                <Image style={{ height: 210 }} source={{ uri: item.imgUrl }} />
+                                <Image style={{ height: 210 }} source={{ uri: item.product_image }} resizeMode="center" />
                                 <View style={{
                                     position: 'absolute',
                                     padding: 12,
                                     bottom: index % 2 === 0 ? 20 : 0
                                 }}>
                                     <Text style={{ fontFamily: "Saol", fontSize: 16 }}>
-                                        {item.title}
+                                        {item.product_name}
+                                    </Text>
+                                    <Text numberOfLines={1} style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.GRAY }}>
+                                        {item.product_describe}
                                     </Text>
                                     <Text numberOfLines={1} style={{ fontFamily: "Saol", fontSize: 12 }}>
-                                        {item.body}
+                                        {item.product_price} VND
                                     </Text>
-
                                 </View>
+                                {pageIndex === 1 ?
+                                    <View style={{
+                                        padding: 4, paddingRight: 8, paddingLeft: 8,
+                                        backgroundColor: COLOR.BROWN, position: "absolute", top: index !== 0 && index % 2 === 0 ? 20 : 20, right: 0
+                                    }}>
+                                        <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.WHITE }}>{item.percent}%</Text>
+                                    </View> : null}
                             </TouchableOpacity>
                         )}
                         numColumns={2}

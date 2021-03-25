@@ -8,7 +8,7 @@ import { EN_TEXT } from '../value/strings'
 
 export default function ForYouScreen({ navigation, route }) {
     const isCarousel = useRef(null)
-    const { forYourProductList } = route.params;
+    const { forYourProductList } = route.params
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
             <View style={{ width: "100%", paddingLeft: 24, paddingRight: 24, paddingBottom: 24, paddingTop: 24, alignItems: 'center' }}>
