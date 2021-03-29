@@ -42,5 +42,6 @@ export const EN_TEXT = {
     DELIVERY: "Delivery",
     BUY_IN_STORE: "Buy in store",
     DELIVERY_FEE: "Delivery fee",
-    EMAIL: 'Email'
+    EMAIL: 'Email',
+    DELIVERY_FEE_PRICE: 20000
 }

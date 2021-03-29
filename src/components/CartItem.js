@@ -2,10 +2,12 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { COLOR } from '../value/colors'
 
-export default function CartItem({ productName, productPrice, quantity }) {
+export default function CartItem({ productName, productPrice, quantity, image }) {
     return (
         <View style={{ width: "100%", flexDirection: "row", marginTop: 12 }}>
-            <View style={{ width: 100, height: 100, backgroundColor: "blue" }} />
+            <View style={{ width: 100, height: 100 }} >
+                <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
+            </View>
             <View style={{ position: "absolute", bottom: 0, left: 112, width: "100%", paddingRight: 112 }} >
                 <Text style={{ fontFamily: "Saol", fontSize: 24, color: COLOR.BLACK }} numberOfLines={2} >{productName}</Text>
                 <View style={{

@@ -48,14 +48,14 @@ const discountData = [
 ]
 
 
-export default function ProfileScreen({ usename, navigation }) {
+export default function ProfileScreen({ username, navigation }) {
     const isCarousel = useRef(null)
 
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }} >
             <View style={{ paddingLeft: 24, paddingRight: 24, paddingTop: 36 }}>
                 <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.GOOD_MORNING}</Text>
-                <Text style={{ fontSize: 24, ...styles.textStyle }} >{usename}</Text>
+                <Text style={{ fontSize: 24, ...styles.textStyle }} >{username}</Text>
             </View>
             <TouchableOpacity style={{ position: 'absolute', top: 40, right: 24 }} onPress={() => navigation.navigate('CartScreen')}>
                 <View style={{ width: 32, height: 32, backgroundColor: COLOR.GRAY, borderRadius: 16 }} />

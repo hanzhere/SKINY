@@ -210,7 +210,7 @@ export default function HomeScreen({ navigation }) {
 
                             <ScrollView horizontal>
                                 {sales?.products_sale?.map((e, i) => (
-                                    <View style={{ width: 120, height: 148, backgroundColor: "red", marginRight: 8, marginTop: 12 }} key={i}>
+                                    <View style={{ width: 120, height: 148, marginRight: 8, marginTop: 12 }} key={i}>
                                         <Image source={{ uri: e?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" resizeMethod="scale" />
                                         <View style={{
                                             padding: 12,
@@ -233,7 +233,7 @@ export default function HomeScreen({ navigation }) {
 
                     </View>
                 </ScrollView>
-            ) : <ProfileScreen usename="Sonha" />}
+            ) : <ProfileScreen username="Sonha" />}
 
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -249,10 +249,7 @@ export default function HomeScreen({ navigation }) {
                         <Image source={require('../images/bag.png')} style={{ width: pageIndex === 2 ? 20 : 16, height: pageIndex === 2 ? 20 : 16, }} resizeMode="center" />
                     </TouchableOpacity>
                 </View>
-
-
             </View>
-
         </View >
     )
 

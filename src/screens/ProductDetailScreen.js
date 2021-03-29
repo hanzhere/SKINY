@@ -4,6 +4,7 @@ import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import CustomButton from '../components/CustomButton'
+import { auth, db } from '../../firebaseConfig'
 
 const ReviewItem = ({ name, comment }) => {
     return (
@@ -29,9 +30,16 @@ export default function ProductDetailScreen({ navigation, route }) {
         ) : null
     }
 
+    const addToCart = () => {
+        db.ref(`users/${auth().currentUser.uid}/cart`).push({
+            product: item,
+            quantity: quantity,
+            original_price: price
+        }).then(() => console.log('added to cart'))
+    }
+
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
-            {/* {console.log(item)} */}
             <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24, zIndex: 999 }}
                 onPress={() => navigation.goBack('HomeScreen')}>
                 <Image source={require('../images/back_btn.png')} style={{ width: 10, height: 18 }} />
@@ -86,7 +94,7 @@ export default function ProductDetailScreen({ navigation, route }) {
                     </View>
                     <Text style={{ fontFamily: "Saol", fontSize: 24, color: COLOR.BLACK }}>{price * quantity} VND</Text>
                 </View>
-                <CustomButton color={COLOR.GREEN} content={EN_TEXT.ADD_TO_CART} contentColor={COLOR.WHITE} press={() => { }} />
+                <CustomButton color={COLOR.GREEN} content={EN_TEXT.ADD_TO_CART} contentColor={COLOR.WHITE} press={() => addToCart()} />
             </View>
         </View>
     )

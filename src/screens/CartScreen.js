@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native'
 import CartItem from '../components/CartItem'
 import CustomButton from '../components/CustomButton'
@@ -8,13 +8,59 @@ import { EN_TEXT } from '../value/strings'
 
 import { Modalize } from 'react-native-modalize';
 import CustomTextInput from '../components/CustomTextInput'
+import { auth, db } from '../../firebaseConfig'
 
 export default function CartScreen({ navigation }) {
+    const [cartList, setCartList] = useState([])
+    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("")
+    const [address, setAddress] = useState("")
+    const [total, setTotal] = useState(0)
+
     const modalizeRef = useRef(null);
 
     const onOpen = () => {
-        modalizeRef.current?.open();
+        modalizeRef.current?.open()
+        calcTotal()
     };
+
+    const getName = () => {
+        db.ref(`users/${auth().currentUser.uid}`).once('value', snap => {
+            setName(() => snap.val().user_name)
+        })
+    }
+
+    const getCart = () => {
+        db.ref(`users/${auth().currentUser.uid}/cart`).on('value', snap => {
+            let data = snap.val() ? snap.val() : {};
+            setCartList(() => Object.values(data))
+        })
+    }
+
+    const calcTotal = () => {
+        let totalPrice = 0
+        cartList.map(e => totalPrice += e.original_price * e.quantity)
+        setTotal(totalPrice)
+    }
+
+    const order = () => {
+        db.ref(`users/${auth().currentUser.uid}/order`).push({
+            timestamp: Date.now(),
+            products: cartList,
+            status: "Handling",
+            product_price: total,
+            delivery_fee: EN_TEXT.DELIVERY_FEE_PRICE,
+            phone: phone,
+            name: name,
+            address: address
+        }).then(() => db.ref(`users/${auth().currentUser.uid}/cart`).remove().then(() => console.log("removed")))
+            .then(() => navigation.navigate("OrderSuccessScreen"))
+    }
+
+    useEffect(() => {
+        getCart()
+        getName()
+    }, [])
 
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
@@ -31,11 +77,19 @@ export default function CartScreen({ navigation }) {
             </View>
 
             <ScrollView style={{ width: DIMENSION.width, flex: 1, padding: 24 }}>
+                {/* <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
                 <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
                 <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
                 <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
-                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
-                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
+                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} /> */}
+
+                {/* {cartList?.map(e => console.log(e))} */}
+                {cartList.length > 0 ? (
+                    cartList.map((e, i) => (
+                        <CartItem key={i} productName={e.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} />
+                    ))
+                ) : null}
+                {console.log(cartList)}
 
                 <View style={{ width: 10, height: 80 }} />
             </ScrollView>
@@ -44,8 +98,7 @@ export default function CartScreen({ navigation }) {
                 ref={modalizeRef}
                 modalStyle={{
                     backgroundColor: COLOR.WHITE,
-                    borderRadius: 0,
-
+                    borderRadius: 0
                 }}
                 modalHeight={DIMENSION.height / 10 * 9}
                 overlayStyle={{ backgroundColor: COLOR.GREEN, zIndex: -99, opacity: .2 }}
@@ -56,33 +109,34 @@ export default function CartScreen({ navigation }) {
                             {EN_TEXT.DELIVERY_INFORMATION}
                         </Text>
 
-                        <CustomTextInput placeholder={EN_TEXT.NAME} style={styles.textInput} />
-                        <CustomTextInput placeholder={"Phone number"} style={styles.textInput} />
-                        <CustomTextInput placeholder={"Address"} style={styles.textInput} />
+                        <CustomTextInput placeholder={EN_TEXT.NAME} style={styles.textInput} value={name} onChangeValue={setName} />
+                        <CustomTextInput placeholder={"Phone number"} style={styles.textInput} keyboard="number-pad" value={phone} onChangeValue={setPhone} />
+                        <CustomTextInput placeholder={"Address"} style={styles.textInput} value={address} onChangeValue={setAddress} />
 
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 32, alignItems: 'flex-end' }}>
                             <Text style={{ fontSize: 20, ...styles.text }}>Product total</Text>
-                            <Text style={{ fontSize: 20, ...styles.text }}>20.000 VND</Text>
+                            <Text style={{ fontSize: 20, ...styles.text }}>{total} VND</Text>
                         </View>
 
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8, alignItems: 'flex-end' }}>
                             <Text style={{ fontSize: 20, ...styles.text }}>{EN_TEXT.DELIVERY_FEE}</Text>
-                            <Text style={{ fontSize: 20, ...styles.text }}>20.000 VND</Text>
+                            <Text style={{ fontSize: 20, ...styles.text }}>{EN_TEXT.DELIVERY_FEE_PRICE} VND</Text>
                         </View>
                         <View style={{ width: "100%", height: 1, backgroundColor: COLOR.GRAY, marginTop: 24 }} />
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8, alignItems: 'flex-end' }}>
                             <Text style={{ fontSize: 20, ...styles.text }}>{EN_TEXT.TOTAL}</Text>
-                            <Text style={{ fontSize: 20, ...styles.text }}>40.000 VND</Text>
+                            <Text style={{ fontSize: 20, ...styles.text }}>{total + EN_TEXT.DELIVERY_FEE_PRICE} VND</Text>
                         </View>
                     </View>
 
-                    <CustomButton content={EN_TEXT.ORDER} contentColor={COLOR.WHITE} color={COLOR.GREEN} press={() => { }} style={{ position: "absolute", bottom: 0, height: 63 }} />
+                    <CustomButton content={EN_TEXT.ORDER} contentColor={COLOR.WHITE} color={COLOR.GREEN} press={() => order()} style={{ position: "absolute", bottom: 0, height: 63 }} />
 
                 </View>
 
             </Modalize>
 
-            <CustomButton press={() => onOpen()} content={EN_TEXT.CHECKOUT} contentColor={COLOR.WHITE} color={COLOR.GREEN} style={{ height: 60 }} />
+            {cartList.length > 0 ? <CustomButton press={() => onOpen()} content={EN_TEXT.CHECKOUT} contentColor={COLOR.WHITE} color={COLOR.GREEN} style={{ height: 60 }} /> : null}
+
         </View>
     )
 }

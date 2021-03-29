@@ -2,7 +2,7 @@ import React from 'react'
 import { TextInput } from 'react-native'
 import { COLOR } from '../value/colors'
 
-export default function CustomTextInput({ value, onChangeValue, placeholder, style, isSecureTextEntry }) {
+export default function CustomTextInput({ value, onChangeValue, placeholder, style, isSecureTextEntry, keyboard }) {
     return (
         <TextInput
             style={{
@@ -17,6 +17,7 @@ export default function CustomTextInput({ value, onChangeValue, placeholder, sty
                 ...style
             }}
             // keyboardType={"visible-password"}
+            keyboardType={keyboard}
             secureTextEntry={isSecureTextEntry}
             placeholderTextColor={COLOR.GRAY}
             placeholder={placeholder}
