@@ -354,6 +354,7 @@ export default function ProductScreen({ navigation, route }) {
                         renderItem={({ item, index }) => (
                             <TouchableOpacity style={{
                                 flex: 1,
+                                borderRadius: 24,
                                 flexDirection: 'column',
                                 marginTop: index !== 0 && index % 2 === 0 ? -20 : 0,
                                 margin: 4
@@ -363,7 +364,7 @@ export default function ProductScreen({ navigation, route }) {
                                 })}
                             >
                                 {index == 1 ? <View style={{ width: 10, height: 20 }} /> : null}
-                                <Image style={{ height: 210 }} source={{ uri: item.product_image }} resizeMode="center" />
+                                <Image style={{ height: 210 }} source={{ uri: item.product_image }} resizeMode="cover" />
                                 <View style={{
                                     position: 'absolute',
                                     padding: 12,

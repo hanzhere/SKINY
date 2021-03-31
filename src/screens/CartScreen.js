@@ -77,13 +77,6 @@ export default function CartScreen({ navigation }) {
             </View>
 
             <ScrollView style={{ width: DIMENSION.width, flex: 1, padding: 24 }}>
-                {/* <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
-                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
-                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
-                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} />
-                <CartItem productName="Nguyen son Ha" productPrice="1.600.000" quantity={5} /> */}
-
-                {/* {cartList?.map(e => console.log(e))} */}
                 {cartList.length > 0 ? (
                     cartList.map((e, i) => (
                         <CartItem key={i} productName={e.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} />
@@ -91,7 +84,7 @@ export default function CartScreen({ navigation }) {
                 ) : null}
                 {console.log(cartList)}
 
-                <View style={{ width: 10, height: 80 }} />
+                <View style={{ width: 10, height: 40 }} />
             </ScrollView>
 
             <Modalize
@@ -135,7 +128,7 @@ export default function CartScreen({ navigation }) {
 
             </Modalize>
 
-            {cartList.length > 0 ? <CustomButton press={() => onOpen()} content={EN_TEXT.CHECKOUT} contentColor={COLOR.WHITE} color={COLOR.GREEN} style={{ height: 60 }} /> : null}
+            {cartList.length > 0 ? <CustomButton press={() => onOpen()} content={EN_TEXT.CHECKOUT} contentColor={COLOR.WHITE} color={COLOR.GREEN} style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 60 }} /> : null}
 
         </View>
     )

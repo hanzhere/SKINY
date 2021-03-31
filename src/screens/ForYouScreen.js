@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
-import CarouselCardItem from '../components/CarouselCardItem'
+import ForYouItem from '../components/ForYouItem'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
@@ -23,8 +23,8 @@ export default function ForYouScreen({ navigation, route }) {
                     color: COLOR.BLACK
                 }}>{EN_TEXT.FOR_YOU}</Text>
             </View>
-            <View style={{ width: DIMENSION.width, flex: 1, backgroundColor: "red" }}>
-                <Image style={{ width: "100%", height: "100%" }} source={{ uri: "https://www.sesderma.com/on/demandware.static/-/Sites-Sesderma_USA-Library/default/dw4981e2c1/category_slider/Bloque_Categorias_PielSensible.jpg" }} />
+            <View style={{ width: DIMENSION.width, flex: 1 }}>
+                <Image style={{ width: "100%", height: "100%", borderTopLeftRadius: 24, borderTopRightRadius: 24 }} source={{ uri: "https://www.sesderma.com/on/demandware.static/-/Sites-Sesderma_USA-Library/default/dw4981e2c1/category_slider/Bloque_Categorias_PielSensible.jpg" }} />
                 <View style={{
                     width: DIMENSION.width,
                     height: 168 + 24 * 2,
@@ -38,7 +38,7 @@ export default function ForYouScreen({ navigation, route }) {
                         layoutCardOffset={16}
                         ref={isCarousel}
                         data={forYourProductList}
-                        renderItem={CarouselCardItem}
+                        renderItem={ForYouItem}
                         sliderWidth={DIMENSION.width - 12 * 2}
                         itemWidth={DIMENSION.width - 24 * 2 - 100}
                         hasParallaxImages={true}

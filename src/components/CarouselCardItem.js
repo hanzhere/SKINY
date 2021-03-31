@@ -13,9 +13,10 @@ const CarouselCardItem = ({ item, index }) => {
                 source={{ uri: item.product_image }}
                 style={{
                     width: "100%",
-                    height: "100%"
+                    height: "100%",
+                    borderRadius: 24
                 }}
-                resizeMode="center"
+                resizeMode="cover"
                 resizeMethod="scale"
             />
             <View style={{
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: COLOR.WHITE,
         width: "100%",
+        borderRadius: 24,
         height: "100%"
     },
 })

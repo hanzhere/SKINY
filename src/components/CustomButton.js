@@ -9,6 +9,7 @@ export default function CustomButton({ press, content, color, contentColor, styl
             backgroundColor: color,
             justifyContent: 'center',
             alignItems: "center",
+            borderRadius: 24,
             ...style
         }}
             onPress={press}

@@ -16,6 +16,7 @@ export default function HomeScreen({ navigation }) {
     const [sales, setSales] = useState([])
     const [username, setUsername] = useState("")
     const [diaries, setDiaries] = useState([])
+    const [cart, setCart] = useState([])
 
     const getProduct = async () => {
         let productList = [];
@@ -37,6 +38,13 @@ export default function HomeScreen({ navigation }) {
                 })
             })
         }).then(() => { setProducts(() => productList) })
+    }
+
+    const getCart = () => {
+        db.ref(`users/${auth().currentUser.uid}/cart`).on("value", snap => {
+            let data = snap.val() ? snap.val() : {};
+            setCart(() => Object.values(data))
+        })
     }
 
     const getDiaries = () => {
@@ -75,6 +83,7 @@ export default function HomeScreen({ navigation }) {
         getSales()
         getUsername()
         getDiaries()
+        getCart()
         return () => backHandler.remove()
     }, []);
 
@@ -146,40 +155,25 @@ export default function HomeScreen({ navigation }) {
                         </View>
                     </View>
 
-                    <View style={{
-                        padding: 24,
-                        paddingTop: 48
-                    }}>
+                    <TouchableOpacity style={{
+                        // width: DIMENSION.width - 24 * 2,
+                        height: 165,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingLeft: 24,
+                        paddingRight: 24,
+                        marginTop: 24
+                    }}
+                        onPress={() => navigation.navigate('ForYouScreen', { forYourProductList: forYourProductList })}
+                    >
+                        <Image source={require('../images/foryou.jpg')} style={{ width: "100%", height: "100%", borderRadius: 24 }} />
                         <Text style={{
                             fontFamily: "Saol",
                             fontSize: 28,
-                            color: COLOR.BLACK
+                            color: COLOR.WHITE,
+                            position: "absolute"
                         }}>{EN_TEXT.FOR_YOU}</Text>
-
-                        <View style={{
-                            width: "100%",
-                            marginTop: 20,
-                            flexDirection: "row",
-                            justifyContent: "space-between"
-                        }}>
-                            <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100 }}>
-                                <Image source={{ uri: forYourProductList[0]?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
-                                {/* {console.log(forYourProductList)} */}
-                            </View>
-                            <View style={{
-                                justifyContent: "space-between"
-                            }}>
-                                <View style={{ width: DIMENSION.width * 30 / 100, height: DIMENSION.width * 30 / 100 }}>
-                                    <Image source={{ uri: forYourProductList[1]?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
-                                </View>
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate('ForYouScreen', { forYourProductList: forYourProductList })}
-                                    style={{ width: DIMENSION.width * 30 / 100, height: 72, backgroundColor: COLOR.BROWN, justifyContent: "center", alignItems: "center" }}>
-                                    <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.WHITE }}>{EN_TEXT.SEE_ALL}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={{
                         padding: 24,
@@ -215,16 +209,16 @@ export default function HomeScreen({ navigation }) {
                         }}>
                             <View style={{
                                 width: "100%",
-                                height: 184,
-                                backgroundColor: "yellow"
+                                height: 184
                             }}>
-                                <Image source={{ uri: sales?.images }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+                                {/* <Image source={{ uri: sales?.images }} style={{ width: "100%", height: "100%" }} resizeMode="cover" /> */}
+                                <Image source={require('../images/sale.jpg')} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" />
 
                             </View>
 
                             <ScrollView horizontal>
                                 {sales?.products_sale?.map((e, i) => (
-                                    <View style={{ width: 120, height: 148, marginRight: 8, marginTop: 12 }} key={i}>
+                                    <View style={{ width: 120, height: 148, marginRight: 8, marginTop: 12, borderRadius: 24 }} key={i}>
                                         <Image source={{ uri: e?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" resizeMethod="scale" />
                                         <View style={{
                                             padding: 12,
@@ -261,6 +255,9 @@ export default function HomeScreen({ navigation }) {
 
                     <TouchableOpacity style={pageIndex === 2 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => navigation.navigate('CartScreen')}>
                         <Image source={require('../images/bag.png')} style={{ width: pageIndex === 2 ? 20 : 16, height: pageIndex === 2 ? 20 : 16, }} resizeMode="center" />
+                        <View style={{ width: 16, height: 16, backgroundColor: COLOR.BROWN, position: "absolute", borderRadius: 24, top: 0, right: -4, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: "Effra", fontSize: 10, color: COLOR.WHITE, marginBottom: 2 }}>{cart.length}</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </View>

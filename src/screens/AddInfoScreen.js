@@ -16,24 +16,24 @@ export default function AddInfoScreen({ navigation }) {
         { name: "Acne Skin", isChoose: false, img: require('../images/55.jpg') }
     ])
     const [routines, setRoutines] = useState([
-        { name: "Micellar Water", isChoose: false, img: require('../images/111.JPG') },
-        { name: "Cleanser", isChoose: false, img: require('../images/222.JPG') },
-        { name: "Toner", isChoose: false, img: require('../images/333.JPG') },
-        { name: "Chemical Exfoliant", isChoose: false, img: require('../images/444.JPG') },
-        { name: "Serum", isChoose: false, img: require('../images/555.JPG') },
-        { name: "Moisturizing Face Cream", isChoose: false, img: require('../images/666.JPG') },
-        { name: "Sunscreen", isChoose: false, img: require('../images/777.JPG') },
-        { name: "Overnight Mask", isChoose: false, img: require('../images/888.JPG') }
+        { name: "Micellar Water", isChoose: false, img: require('../images/111.jpg') },
+        { name: "Cleanser", isChoose: false, img: require('../images/222.jpg') },
+        { name: "Toner", isChoose: false, img: require('../images/333.jpg') },
+        { name: "Chemical Exfoliant", isChoose: false, img: require('../images/444.jpg') },
+        { name: "Serum", isChoose: false, img: require('../images/555.jpg') },
+        { name: "Moisturizing Face Cream", isChoose: false, img: require('../images/666.jpg') },
+        { name: "Sunscreen", isChoose: false, img: require('../images/777.jpg') },
+        { name: "Overnight Mask", isChoose: false, img: require('../images/888.jpg') }
     ])
     const [skinGoals, setSkinGoals] = useState([
-        { name: "Less Acnes", isChoose: false, img: require('../images/1.JPG') },
-        { name: "Light Skin", isChoose: false, img: require('../images/2.JPG') },
-        { name: "Blurred", isChoose: false, img: require('../images/3.JPG') },
-        { name: "Tone Lift", isChoose: false, img: require('../images/4.JPG') },
-        { name: "Less Visible Lines and Wrinkles", isChoose: false, img: require('../images/5.JPG') },
-        { name: "Youthful-looking Skin", isChoose: false, img: require('../images/6.JPG') },
-        { name: "Smaller-looking Pores", isChoose: false, img: require('../images/7.JPG') },
-        { name: "Control Oil", isChoose: false, img: require('../images/8.JPG') },
+        { name: "Less Acnes", isChoose: false, img: require('../images/1.jpg') },
+        { name: "Light Skin", isChoose: false, img: require('../images/2.jpg') },
+        { name: "Blurred", isChoose: false, img: require('../images/3.jpg') },
+        { name: "Tone Lift", isChoose: false, img: require('../images/4.jpg') },
+        { name: "Less Visible Lines and Wrinkles", isChoose: false, img: require('../images/5.jpg') },
+        { name: "Youthful-looking Skin", isChoose: false, img: require('../images/6.jpg') },
+        { name: "Smaller-looking Pores", isChoose: false, img: require('../images/7.jpg') },
+        { name: "Control Oil", isChoose: false, img: require('../images/8.jpg') },
     ])
     const handleChangeSkinStatus = (i) => {
         let temp = skinStatus
@@ -141,9 +141,10 @@ export default function AddInfoScreen({ navigation }) {
                 }[pageIndex]}</Text>
 
                 <View style={{
-                    width: DIMENSION.width - 24 * 4,
-                    height: DIMENSION.height / 2 - 24,
-                    marginTop: 112,
+                    width: DIMENSION.width - 24 * 2,
+                    height: DIMENSION.height - (24 * 7 + 50),
+                    marginTop: 100,
+                    // backgroundColor: "red"
                 }}>
                     <ScrollView >
                         <View style={{
@@ -155,33 +156,22 @@ export default function AddInfoScreen({ navigation }) {
                                         <TouchableOpacity
                                             style={{
                                                 marginBottom: 8,
-                                                width: "100%",
-                                                marginLeft: 24,
-                                                marginRight: 24,
-                                                height: 50,
-                                                backgroundColor: e.isChoose ? COLOR.GREEN : COLOR.LIGHT_GREEN,
                                                 flexDirection: 'row',
                                                 alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                padding: 24
+                                                justifyContent: 'center'
                                             }}
                                             onPress={() => handleChangeSkinStatus(i)}
                                             key={i}
                                         >
-                                            <Image source={e.img} style={{ width: "100%", height: "100%" }} />
-                                            {/* <Text
+                                            <Image source={e.img} style={{ width: "100%", height: 77, opacity: e.isChoose ? 1 : .5, borderRadius: 24 }} />
+                                            <Text
                                                 style={{
-                                                    fontFamily: "Saol",
+                                                    position: 'absolute',
+                                                    fontFamily: "Effra",
                                                     fontSize: 18,
-                                                    color: e.isChoose ? COLOR.WHITE : COLOR.BLACK
+                                                    color: e.isChoose ? COLOR.WHITE : COLOR.GREEN
                                                 }} >{e.name}</Text>
-                                            <View
-                                                style={{
-                                                    width: 8,
-                                                    height: 8,
-                                                    borderRadius: 4,
-                                                    backgroundColor: e.isChoose ? COLOR.WHITE : COLOR.LIGHT_GREEN
-                                                }} /> */}
+
                                         </TouchableOpacity>
                                     ))
                                 ),
@@ -190,32 +180,23 @@ export default function AddInfoScreen({ navigation }) {
                                         <TouchableOpacity
                                             style={{
                                                 marginBottom: 8,
-                                                width: "100%",
-                                                marginLeft: 24,
-                                                marginRight: 24,
-                                                height: 50,
-                                                backgroundColor: e.isChoose ? COLOR.GREEN : COLOR.LIGHT_GREEN,
                                                 flexDirection: 'row',
                                                 alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                padding: 24
+                                                justifyContent: 'center'
                                             }}
                                             onPress={() => handleChangeRoutines(i)}
                                             key={i}
                                         >
+                                            <Image source={e.img} style={{ width: "100%", height: 77, opacity: e.isChoose ? 1 : .5, borderRadius: 24 }} />
                                             <Text
                                                 style={{
-                                                    fontFamily: "Saol",
+                                                    position: 'absolute',
+                                                    fontFamily: "Effra",
                                                     fontSize: 18,
-                                                    color: e.isChoose ? COLOR.WHITE : COLOR.BLACK
+                                                    color: COLOR.WHITE,
+                                                    color: e.isChoose ? COLOR.WHITE : COLOR.GREEN
                                                 }} >{e.name}</Text>
-                                            <View
-                                                style={{
-                                                    width: 8,
-                                                    height: 8,
-                                                    borderRadius: 4,
-                                                    backgroundColor: e.isChoose ? COLOR.WHITE : COLOR.LIGHT_GREEN
-                                                }} />
+
                                         </TouchableOpacity>
                                     ))
                                 ),
@@ -224,32 +205,23 @@ export default function AddInfoScreen({ navigation }) {
                                         <TouchableOpacity
                                             style={{
                                                 marginBottom: 8,
-                                                width: "100%",
-                                                marginLeft: 24,
-                                                marginRight: 24,
-                                                height: 50,
-                                                backgroundColor: e.isChoose ? COLOR.GREEN : COLOR.LIGHT_GREEN,
                                                 flexDirection: 'row',
                                                 alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                padding: 24
+                                                justifyContent: 'center'
                                             }}
                                             onPress={() => handleChangeSkinGoals(i)}
                                             key={i}
                                         >
+                                            <Image source={e.img} style={{ width: "100%", height: 77, opacity: e.isChoose ? 1 : .5, borderRadius: 24 }} />
                                             <Text
                                                 style={{
-                                                    fontFamily: "Saol",
+                                                    position: 'absolute',
+                                                    fontFamily: "Effra",
                                                     fontSize: 18,
-                                                    color: e.isChoose ? COLOR.WHITE : COLOR.BLACK
+                                                    color: COLOR.WHITE,
+                                                    color: e.isChoose ? COLOR.WHITE : COLOR.GREEN
                                                 }} >{e.name}</Text>
-                                            <View
-                                                style={{
-                                                    width: 8,
-                                                    height: 8,
-                                                    borderRadius: 4,
-                                                    backgroundColor: e.isChoose ? COLOR.WHITE : COLOR.LIGHT_GREEN
-                                                }} />
+
                                         </TouchableOpacity>
                                     ))
                                 ),

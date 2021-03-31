@@ -94,15 +94,15 @@ export default function ProductDetailScreen({ navigation, route }) {
                     </View>
                     <Text style={{ fontFamily: "Saol", fontSize: 24, color: COLOR.BLACK }}>{price * quantity} VND</Text>
                 </View>
-                <CustomButton color={COLOR.GREEN} content={EN_TEXT.ADD_TO_CART} contentColor={COLOR.WHITE} press={() => addToCart()} />
+                <CustomButton color={COLOR.GREEN} content={EN_TEXT.ADD_TO_CART} contentColor={COLOR.WHITE} press={() => addToCart()} style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 60 }} />
             </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    rateDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#979797', marginRight: 8 },
+    rateDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#F3E037', marginRight: 8 },
     section: { width: DIMENSION.width, padding: 24 },
-    addButtonContainer: { width: 24, height: 24, backgroundColor: COLOR.GRAY, justifyContent: 'center', alignItems: 'center' },
+    addButtonContainer: { width: 24, height: 24, backgroundColor: COLOR.GRAY, justifyContent: 'center', alignItems: 'center', borderRadius: 24 },
     addButton: { fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }
 })

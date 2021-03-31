@@ -4,31 +4,14 @@ import { COLOR } from '../value/colors'
 
 export default function CartItem({ productName, productPrice, quantity, image }) {
     return (
-        <View style={{ width: "100%", flexDirection: "row", marginTop: 12 }}>
-            <View style={{ width: 100, height: 100 }} >
-                <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
+        <View style={{ width: "100%", flexDirection: "row", backgroundColor: COLOR.GRAY, borderRadius: 24, alignItems: 'center', marginBottom: 4 }}>
+            <View style={{ width: 100, height: 100, alignItems: 'center', justifyContent: 'center' }} >
+                <Image source={{ uri: image }} style={{ width: "90%", height: "90%", borderRadius: 20 }} resizeMode="cover" />
             </View>
-            <View style={{ position: "absolute", bottom: 0, left: 112, width: "100%", paddingRight: 112 }} >
-                <Text style={{ fontFamily: "Saol", fontSize: 24, color: COLOR.BLACK }} numberOfLines={2} >{productName}</Text>
-                <View style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "flex-end",
-                    marginTop: 8
-                }}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-                        <TouchableOpacity style={styles.addButtonContainer}>
-                            <Image style={{ width: 12, height: 12 }} resize12ethod="scale" resizeMode="center" source={require('../images/plus.png')} />
-                        </TouchableOpacity>
-                        <View style={{ width: 24, height: 24, backgroundColor: "transparent", justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 18, fontFamily: "Saol", color: COLOR.BLACK }}>{quantity}</Text>
-                        </View>
-                        <TouchableOpacity style={styles.addButtonContainer}>
-                            <Image style={{ width: 12, height: 12 }} resizeMethod="scale" resizeMode="center" source={require('../images/minus.png')} />
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }}>{productPrice} VND</Text>
-                </View>
+            <View style={{ width: "100%", paddingRight: 120, marginLeft: 4 }} >
+                <Text style={{ fontFamily: "Saol", fontSize: 20, color: COLOR.BLACK }} numberOfLines={2} >{productName}</Text>
+                <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.WHITE, marginTop: 4 }} numberOfLines={1} >{quantity} {quantity > 1 ? "products" : "product"}</Text>
+                <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{productPrice} VND</Text>
             </View>
         </View>
     )
