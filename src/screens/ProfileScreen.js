@@ -1,18 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import CarouselCardItem from '../components/CarouselCardItem'
 import Carousel from 'react-native-snap-carousel'
-
-const diaryData = [
-    { date: "25/02/2020", content: "Getting better" },
-    { date: "26/02/2020", content: "Gettinggggggggg betterrrrrr Gettinggg betterrrrrr Gettinggggggggg betterrrrrr Gettinggggggggg betterrrrrr" },
-    { date: "27/02/2020", content: "Gettingdddd betterddddd" },
-    { date: "28/02/2020", content: "Getting better" },
-
-]
+import { Modal, ScaleAnimation, ModalContent, ModalTitle } from 'react-native-modals'
 
 const data = [
     {
@@ -48,48 +41,82 @@ const discountData = [
 ]
 
 
-export default function ProfileScreen({ username, navigation }) {
+export default function ProfileScreen({ username, navigation, diaries }) {
     const isCarousel = useRef(null)
+    const [showModal, setShowModal] = useState(false)
 
     return (
-        <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }} >
-            <View style={{ paddingLeft: 24, paddingRight: 24, paddingTop: 36 }}>
-                <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.GOOD_MORNING}</Text>
-                <Text style={{ fontSize: 24, ...styles.textStyle }} >{username}</Text>
-            </View>
-            <TouchableOpacity style={{ position: 'absolute', top: 40, right: 24 }} onPress={() => navigation.navigate('CartScreen')}>
-                <View style={{ width: 32, height: 32, backgroundColor: COLOR.GRAY, borderRadius: 16 }} />
-                <View style={{ width: 16, height: 16, backgroundColor: COLOR.BROWN, borderRadius: 10, position: 'absolute', top: 0, right: -4, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontFamily: "Effra", fontSize: 8, color: COLOR.WHITE, marginBottom: 2 }}>8</Text>
-                </View>
-            </TouchableOpacity>
-            <ScrollView style={{ marginTop: 12, width: DIMENSION.width, flex: 1, padding: 24 }}>
+        <>
 
-                <View >
-                    <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
-                        <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.DIARY}</Text>
-                        <Image source={require('../images/plus.png')} style={{ width: 8, height: 8 }} resizeMode="cover" />
+            <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }} >
+
+
+
+                <View style={{ paddingLeft: 24, paddingRight: 24, paddingTop: 36 }}>
+                    {/* {console.log(diaries)} */}
+                    <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.GOOD_MORNING}</Text>
+                    <Text style={{ fontSize: 24, ...styles.textStyle }} >{username}</Text>
+                </View>
+                <TouchableOpacity style={{ position: 'absolute', top: 40, right: 24 }} onPress={() => navigation.navigate('CartScreen')}>
+                    <View style={{ width: 32, height: 32, backgroundColor: COLOR.GRAY, borderRadius: 16 }} />
+                    <View style={{ width: 16, height: 16, backgroundColor: COLOR.BROWN, borderRadius: 10, position: 'absolute', top: 0, right: -4, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontFamily: "Effra", fontSize: 8, color: COLOR.WHITE, marginBottom: 2 }}>8</Text>
                     </View>
-                    {diaryData.map((e, i) => (
-                        <View key={i} style={{ flexDirection: "row", padding: 12, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{e.date}</Text>
-                            <View style={{ width: 1, height: "100%", backgroundColor: COLOR.BLACK, margin: 4 }} />
-                            <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 50, lineHeight: 14 }}>{e.content}</Text>
+                </TouchableOpacity>
+
+
+
+                <ScrollView style={{ marginTop: 12, width: DIMENSION.width, flex: 1, padding: 24 }}>
+                    {console.log(showModal)}
+                    <Modal
+                        onTouchOutside={() => {
+                            setShowModal(() => false)
+                        }}
+                        //width={0.9}
+
+                        modalTitle={
+                            <ModalTitle
+                                title="Modal - Scale Animation"
+                                hasTitleBar={false}
+                            />
+                        }
+                        onSwipeOut={() => setShowModal(() => false)}
+                        visible={showModal}
+
+                    >
+                        <ModalContent>
+                            <Text>aksfjhakjfhaskdhg</Text>
+                        </ModalContent>
+                    </Modal>
+                    <View >
+                        <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
+                            <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.DIARY}</Text>
+                            <TouchableOpacity onPress={() => { setShowModal(() => true) }}>
+                                <Image source={require('../images/plus.png')} style={{ width: 8, height: 8 }} resizeMode="cover" />
+                            </TouchableOpacity>
+
+
                         </View>
-                    ))}
-                </View>
-
-                <View style={{ marginTop: 20 }} >
-                    <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
-                        <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.YOUR_SKIN}</Text>
+                        {diaries.length > 0 ? diaries.map((e, i) => (
+                            <TouchableOpacity key={i} style={{ flexDirection: "row", padding: 12, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", alignItems: 'center' }} onPress={() => { setShowModal(() => true) }}>
+                                <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{e.date}</Text>
+                                <View style={{ width: 1, height: "100%", backgroundColor: COLOR.BLACK, margin: 8 }} />
+                                <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 70, lineHeight: 14 }}>{e.title}</Text>
+                            </TouchableOpacity>
+                        )) : null}
                     </View>
-                    <View style={{
-                        width: DIMENSION.width,
-                        height: 240 + 24 * 2,
-                        marginTop: 8,
 
-                    }}>
-                        {/* <Carousel
+                    <View style={{ marginTop: 20 }} >
+                        <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
+                            <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.YOUR_SKIN}</Text>
+                        </View>
+                        <View style={{
+                            width: DIMENSION.width,
+                            height: 240 + 24 * 2,
+                            marginTop: 8,
+
+                        }}>
+                            {/* <Carousel
                             layout="default"
                             layoutCardOffset={16}
                             ref={isCarousel}
@@ -104,56 +131,60 @@ export default function ProfileScreen({ username, navigation }) {
                             inactiveSlideShift={10}
                             useScrollView={true}
                         /> */}
+                        </View>
                     </View>
-                </View>
 
-                <View style={{ marginTop: 20 }} >
-                    <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
-                        <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.MESSAGES}</Text>
-                    </View>
-                    <Text style={{ fontFamily: "Effra", fontSize: 16, color: "#6B6B6B", marginTop: 4, marginLeft: 12 }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.v
+                    <View style={{ marginTop: 20 }} >
+                        <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
+                            <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.MESSAGES}</Text>
+                        </View>
+                        <Text style={{ fontFamily: "Effra", fontSize: 16, color: "#6B6B6B", marginTop: 4, marginLeft: 12 }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.v
                     </Text>
-                </View>
-
-                <View style={{ marginTop: 20 }} >
-                    <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
-                        <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.ORDER}</Text>
-                        <TouchableOpacity style={{
-                            flexDirection: 'row',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
-                            <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
-                        </TouchableOpacity>
                     </View>
-                    {orderData.map((e, i) => (
-                        <View key={i} style={{ flexDirection: "row", padding: 12, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{e.date}</Text>
-                            <View style={{ width: 1, height: "100%", backgroundColor: COLOR.BLACK, margin: 4 }} />
-                            <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 70, lineHeight: 14 }}>{e.price}</Text>
-                            <Text style={{ fontSize: 10, ...styles.textStyleLight, position: 'absolute', right: 24 }}>{e.status}</Text>
-                        </View>
-                    ))}
-                </View>
 
-                <View style={{ marginTop: 20 }} >
-                    <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
-                        <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.DISCOUNT}</Text>
+                    <View style={{ marginTop: 20 }} >
+                        <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
+                            <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.ORDER}</Text>
+                            <TouchableOpacity style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
+                                <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
+                            </TouchableOpacity>
+                        </View>
+                        {orderData.map((e, i) => (
+                            <View key={i} style={{ flexDirection: "row", padding: 12, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", alignItems: 'center' }}>
+                                <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{e.date}</Text>
+                                <View style={{ width: 1, height: "100%", backgroundColor: COLOR.BLACK, margin: 4 }} />
+                                <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 70, lineHeight: 14 }}>{e.price}</Text>
+                                <Text style={{ fontSize: 10, ...styles.textStyleLight, position: 'absolute', right: 24 }}>{e.status}</Text>
+                            </View>
+                        ))}
                     </View>
-                    {discountData.map((e, i) => (
-                        <View key={i} style={{ padding: 12, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{e.content}</Text>
-                            <Text style={{ fontSize: 10, ...styles.textStyleLight, marginRight: 70, lineHeight: 14, color: COLOR.GRAY }}>Deadline: {e.deadline}</Text>
-                            <Text style={{ fontSize: 10, ...styles.textStyleLight, position: 'absolute', right: 24 }}>{e.area}</Text>
+
+                    <View style={{ marginTop: 20 }} >
+                        <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
+                            <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.DISCOUNT}</Text>
                         </View>
-                    ))}
-                </View>
+                        {discountData.map((e, i) => (
+                            <View key={i} style={{ padding: 12, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{e.content}</Text>
+                                <Text style={{ fontSize: 10, ...styles.textStyleLight, marginRight: 70, lineHeight: 14, color: COLOR.GRAY }}>Deadline: {e.deadline}</Text>
+                                <Text style={{ fontSize: 10, ...styles.textStyleLight, position: 'absolute', right: 24 }}>{e.area}</Text>
+                            </View>
+                        ))}
+                    </View>
 
-                <View style={{ width: 10, height: 120 }} />
+                    <View style={{ width: 10, height: 120 }} />
 
-            </ScrollView>
-        </View>
+                </ScrollView>
+
+
+
+            </View>
+        </>
     )
 }
 

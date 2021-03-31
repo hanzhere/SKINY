@@ -14,6 +14,8 @@ import CartScreen from './src/screens/CartScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import OrderSuccessScreen from './src/screens/OrderSuccessScreen';
 
+import { ModalPortal } from 'react-native-modals';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -30,20 +32,23 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LandingScreen" screenOptions={{ headerShown: false }}>
+    <>
+      <ModalPortal />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="LandingScreen" screenOptions={{ headerShown: false }}>
 
-        <Stack.Screen name="LandingScreen" component={LandingScreen} />
-        <Stack.Screen name="AddInfoScreen" component={AddInfoScreen} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="ForYouScreen" component={ForYouScreen} />
-        <Stack.Screen name="ProductScreen" component={ProductScreen} />
-        <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
-        <Stack.Screen name="CartScreen" component={CartScreen} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Stack.Screen name="OrderSuccessScreen" component={OrderSuccessScreen} />
+          <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen name="AddInfoScreen" component={AddInfoScreen} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="ForYouScreen" component={ForYouScreen} />
+          <Stack.Screen name="ProductScreen" component={ProductScreen} />
+          <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
+          <Stack.Screen name="CartScreen" component={CartScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+          <Stack.Screen name="OrderSuccessScreen" component={OrderSuccessScreen} />
 
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }

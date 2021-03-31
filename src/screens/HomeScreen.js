@@ -12,9 +12,10 @@ export default function HomeScreen({ navigation }) {
     const isCarousel = useRef(null)
     const [pageIndex, setPageIndex] = useState(1)
     const [products, setProducts] = useState([])
-    const [forYour, setForYour] = useState([])
     const [forYourProductList, setForYourProductList] = useState([])
     const [sales, setSales] = useState([])
+    const [username, setUsername] = useState("")
+    const [diaries, setDiaries] = useState([])
 
     const getProduct = async () => {
         let productList = [];
@@ -33,10 +34,16 @@ export default function HomeScreen({ navigation }) {
                         e == pe.product_id ? (list.push(pe)) : null
                     }),
                         setForYourProductList(() => list)
-
                 })
             })
         }).then(() => { setProducts(() => productList) })
+    }
+
+    const getDiaries = () => {
+        db.ref(`users/${auth().currentUser.uid}/diaries`).on('value', snap => {
+            let data = snap.val() ? snap.val() : {};
+            setDiaries(() => Object.values(data))
+        })
     }
 
     const getSales = () => {
@@ -58,9 +65,16 @@ export default function HomeScreen({ navigation }) {
     }
     const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction)
 
+    const getUsername = () => {
+        db.ref(`users/${auth().currentUser.uid}`).on('value', snapshot => setUsername(() => snapshot.val().user_name))
+    }
+
     useEffect(() => {
+        console.log("run")
         getProduct()
         getSales()
+        getUsername()
+        getDiaries()
         return () => backHandler.remove()
     }, []);
 
@@ -150,7 +164,7 @@ export default function HomeScreen({ navigation }) {
                         }}>
                             <View style={{ width: DIMENSION.width * 55 / 100, height: DIMENSION.width * 55 / 100 }}>
                                 <Image source={{ uri: forYourProductList[0]?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="center" />
-                                {console.log(forYourProductList)}
+                                {/* {console.log(forYourProductList)} */}
                             </View>
                             <View style={{
                                 justifyContent: "space-between"
@@ -233,7 +247,7 @@ export default function HomeScreen({ navigation }) {
 
                     </View>
                 </ScrollView>
-            ) : <ProfileScreen username="Sonha" />}
+            ) : <ProfileScreen username={username} diaries={diaries} />}
 
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>

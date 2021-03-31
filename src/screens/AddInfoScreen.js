@@ -9,27 +9,31 @@ import * as ImagePicker from 'expo-image-picker'
 
 export default function AddInfoScreen({ navigation }) {
     const [skinStatus, setSkinStatus] = useState([
-        { name: "Black hole", isChoose: false },
-        { name: "Oil Skin", isChoose: false },
-        { name: "Mole", isChoose: false },
-        { name: "Lo chan long to", isChoose: false },
-        { name: "Nhieu long", isChoose: false },
+        { name: "Normal Skin", isChoose: false, img: require('../images/11.jpg') },
+        { name: "Combanation Skin", isChoose: false, img: require('../images/22.jpg') },
+        { name: "Dry Skin", isChoose: false, img: require('../images/33.jpg') },
+        { name: "Oily Skin", isChoose: false, img: require('../images/44.jpg') },
+        { name: "Acne Skin", isChoose: false, img: require('../images/55.jpg') }
     ])
     const [routines, setRoutines] = useState([
-        { name: 'Routine', isChoose: false },
-        { name: 'Mole', isChoose: false },
-        { name: 'Bac', isChoose: false },
-        { name: 'Bca', isChoose: false },
-        { name: 'Abc', isChoose: false },
-        { name: 'DMC', isChoose: false }
+        { name: "Micellar Water", isChoose: false, img: require('../images/111.JPG') },
+        { name: "Cleanser", isChoose: false, img: require('../images/222.JPG') },
+        { name: "Toner", isChoose: false, img: require('../images/333.JPG') },
+        { name: "Chemical Exfoliant", isChoose: false, img: require('../images/444.JPG') },
+        { name: "Serum", isChoose: false, img: require('../images/555.JPG') },
+        { name: "Moisturizing Face Cream", isChoose: false, img: require('../images/666.JPG') },
+        { name: "Sunscreen", isChoose: false, img: require('../images/777.JPG') },
+        { name: "Overnight Mask", isChoose: false, img: require('../images/888.JPG') }
     ])
     const [skinGoals, setSkinGoals] = useState([
-        { name: 'Skingoal fat', isChoose: false },
-        { name: 'Mole', isChoose: false },
-        { name: 'Bac', isChoose: false },
-        { name: 'Bca', isChoose: false },
-        { name: 'Abc', isChoose: false },
-        { name: 'DMC', isChoose: false }
+        { name: "Less Acnes", isChoose: false, img: require('../images/1.JPG') },
+        { name: "Light Skin", isChoose: false, img: require('../images/2.JPG') },
+        { name: "Blurred", isChoose: false, img: require('../images/3.JPG') },
+        { name: "Tone Lift", isChoose: false, img: require('../images/4.JPG') },
+        { name: "Less Visible Lines and Wrinkles", isChoose: false, img: require('../images/5.JPG') },
+        { name: "Youthful-looking Skin", isChoose: false, img: require('../images/6.JPG') },
+        { name: "Smaller-looking Pores", isChoose: false, img: require('../images/7.JPG') },
+        { name: "Control Oil", isChoose: false, img: require('../images/8.JPG') },
     ])
     const handleChangeSkinStatus = (i) => {
         let temp = skinStatus
@@ -85,7 +89,6 @@ export default function AddInfoScreen({ navigation }) {
         skinGoals.filter(e => e.isChoose ? skinGoalsTemp.push(e.name) : null)
         routines.filter(e => e.isChoose ? routinesTemp.push(e.name) : null)
 
-        // console.log(auth().currentUser.uid)
         db.ref(`users/${uuid}/user_skin`).set({
             skin_status: skinStatusTemp,
             skin_goals: skinGoalsTemp,
@@ -114,6 +117,7 @@ export default function AddInfoScreen({ navigation }) {
                         }}
                     />
                 </TouchableOpacity>
+
             ) : null}
             {console.log(pageIndex)}
             <View
@@ -122,41 +126,24 @@ export default function AddInfoScreen({ navigation }) {
                     height: DIMENSION.height,
                     alignItems: 'center'
                 }}>
-                <View
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: 54
-                    }}>
-                    <Text
-                        style={{
-                            fontFamily: "Saol",
-                            fontSize: 32,
-                            color: COLOR.BLACK
-                        }}>{EN_TEXT.HI}, Sonha</Text>
-                    <View style={{ width: 172, height: 1, backgroundColor: COLOR.BLACK, marginTop: 4 }} />
-                    <Text
-                        style={{
-                            marginTop: 16,
-                            fontFamily: "Saol",
-                            fontSize: 18,
-                            color: COLOR.BLACK
-                        }}>{EN_TEXT.LET_US_KNOW}</Text>
-
-                    <Text style={{ fontFamily: "Saol", fontSize: 24, color: COLOR.BLACK, marginTop: 28 }}>
-                        {{
-                            1: EN_TEXT.SKIN_STATUS,
-                            2: EN_TEXT.SKIN_ROUTINES,
-                            3: EN_TEXT.SKIN_GOALS,
-                            4: EN_TEXT.YOUR_SKIN
-                        }[pageIndex]}
-                    </Text>
-                </View>
+                <Text style={{
+                    position: 'absolute',
+                    textAlign: 'center',
+                    top: 24,
+                    fontSize: 32,
+                    fontFamily: "Saol",
+                    color: COLOR.BLACK
+                }}>{{
+                    1: EN_TEXT.SKIN_STATUS,
+                    2: EN_TEXT.SKIN_ROUTINES,
+                    3: EN_TEXT.SKIN_GOALS,
+                    4: EN_TEXT.YOUR_SKIN
+                }[pageIndex]}</Text>
 
                 <View style={{
                     width: DIMENSION.width - 24 * 4,
                     height: DIMENSION.height / 2 - 24,
-                    marginTop: 24,
+                    marginTop: 112,
                 }}>
                     <ScrollView >
                         <View style={{
@@ -181,7 +168,8 @@ export default function AddInfoScreen({ navigation }) {
                                             onPress={() => handleChangeSkinStatus(i)}
                                             key={i}
                                         >
-                                            <Text
+                                            <Image source={e.img} style={{ width: "100%", height: "100%" }} />
+                                            {/* <Text
                                                 style={{
                                                     fontFamily: "Saol",
                                                     fontSize: 18,
@@ -193,7 +181,7 @@ export default function AddInfoScreen({ navigation }) {
                                                     height: 8,
                                                     borderRadius: 4,
                                                     backgroundColor: e.isChoose ? COLOR.WHITE : COLOR.LIGHT_GREEN
-                                                }} />
+                                                }} /> */}
                                         </TouchableOpacity>
                                     ))
                                 ),

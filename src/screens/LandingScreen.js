@@ -98,6 +98,7 @@ export default function LandingScreen({ navigation }) {
                                 }}
                                 value={password}
                                 onChangeValue={setPassword}
+                                isSecureTextEntry={true}
                                 placeholder={EN_TEXT.PASSWORD} />
                             {console.log(email, password)}
                             <View style={{ height: 80, width: 40 }} />
