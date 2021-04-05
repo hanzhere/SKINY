@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions } from 'react-native'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
@@ -7,6 +7,8 @@ import CarouselCardItem from '../components/CarouselCardItem'
 import Carousel from 'react-native-snap-carousel'
 import { Modal, ScaleAnimation, ModalContent, ModalTitle } from 'react-native-modals'
 import { db, auth } from '../../firebaseConfig'
+import NothingInList from '../components/NothingInList'
+import { useNavigation } from '@react-navigation/native'
 
 const discountData = [
     { percent: "20%", target: "All product", deadline: "30/2/2020", area: "IN STORE", img: require('../images/sale20.jpg') },
@@ -15,13 +17,14 @@ const discountData = [
     { percent: "20%", target: "All product", deadline: "30/2/2020", area: "IN STORE", img: require('../images/sale20.jpg') },
 ]
 
-
-export default function ProfileScreen({ username, navigation, diaries }) {
+export default function ProfileScreen({ username, diaries }) {
     const isCarousel = useRef(null)
     const [showModal, setShowModal] = useState(false)
     const [discountList, setDiscountList] = useState([])
     const [orderList, setOrderList] = useState([])
     const [message, setMessage] = useState("")
+
+    const navigation = useNavigation();
 
     useEffect(() => {
         getOrderList()
@@ -54,6 +57,10 @@ export default function ProfileScreen({ username, navigation, diaries }) {
     const getTime = (timestamp) => {
         let date = new Date(timestamp)
         return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    }
+
+    const handleNavigate = () => {
+        navigation.navigate('AllOrderScreen', { orderList: orderList })
     }
 
     return (
@@ -124,20 +131,12 @@ export default function ProfileScreen({ username, navigation, diaries }) {
                                 </ScrollView>
                             ))
                             :
-                            <View style={{ alignSelf: 'center', justifyContent: 'center' }}>
-                                <Image source={require('../images/nodiary.jpg')} style={{ width: 200, height: 300, borderRadius: 24, opacity: .5 }} resizeMode="cover" />
-                                <Text style={{ alignSelf: 'center', fontFamily: "Effra", fontSize: 16, color: COLOR.GREEN, position: "absolute" }}>No diary</Text>
-                            </View>
-
-                        }
-
+                            <NothingInList text="No diary" />}
                     </View>
 
                     <TouchableOpacity
                         style={{ width: DIMENSION.width, justifyContent: 'center', flexDirection: "row", alignItems: 'center', marginTop: 12 }}
-
-                        onPress={() => setShowModal(() => true)}
-                    >
+                        onPress={() => setShowModal(() => true)}>
                         <View style={{ width: 36, height: 36, backgroundColor: COLOR.GRAY, borderRadius: 24, justifyContent: 'center', alignItems: 'center' }} >
                             <Text style={{ fontFamily: "Effra", color: COLOR.WHITE }}>+</Text>
                         </View>
@@ -156,23 +155,24 @@ export default function ProfileScreen({ username, navigation, diaries }) {
                             <TouchableOpacity style={{
                                 flexDirection: 'row',
                                 alignItems: 'center'
-                            }}>
+                            }}
+                                onPress={() => handleNavigate()}
+                            >
                                 <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{EN_TEXT.SEE_ALL}</Text>
                                 <Image style={{ height: 6, width: 13, marginLeft: 4 }} source={require('../images/right_arrow.png')} />
                             </TouchableOpacity>
                         </View>
                         {orderList.length > 0 ? orderList.map((e, i) => (
-                            // console.log(e)
                             <View key={i} style={{ flexDirection: "row", padding: 12, paddingLeft: 18, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", alignItems: 'center', borderRadius: 24 }}>
                                 <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{getTime(e.timestamp)}</Text>
                                 <View style={{ width: 1, height: "100%", backgroundColor: COLOR.WHITE, margin: 4 }} />
                                 <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 70, lineHeight: 14 }}>{e.product_price} VND</Text>
                                 <Text style={{ fontSize: 10, ...styles.textStyleLight, position: 'absolute', right: 24 }}>{e.status}</Text>
                             </View>
-                        )) : <Text>no order</Text>}
+                        )) : <NothingInList width={DIMENSION.width - 24 * 2} height={100} text="No order" style={{ marginTop: 20 }} />}
                     </View>
 
-                    <View style={{ padding: 24, paddingTop: 8 }} >
+                    <View style={{ padding: 24, paddingTop: 8, width: DIMENSION.width }} >
                         <View style={{ flexDirection: "row", alignItems: 'flex-end', justifyContent: "space-between", marginBottom: 4 }}>
                             <Text style={{ fontSize: 20, ...styles.textStyle }}>{EN_TEXT.DISCOUNT}</Text>
                         </View>
@@ -188,8 +188,12 @@ export default function ProfileScreen({ username, navigation, diaries }) {
                                     <Text style={{ fontSize: 10, ...styles.textSale, position: 'absolute', bottom: 12, right: 12 }}>{e.area}</Text>
 
                                 </View>
-                            )) : <Text>nodiscount</Text>}
 
+                            )) : (
+                                <View style={{}}>
+                                    <NothingInList width={DIMENSION.width - 24 * 2} height={100} text="No discount" />
+                                </View>
+                            )}
                         </ScrollView>
                     </View>
                     <View style={{ width: 10, height: 80 }} />

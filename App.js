@@ -15,7 +15,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import OrderSuccessScreen from './src/screens/OrderSuccessScreen';
 
 import { ModalPortal } from 'react-native-modals';
-import AllProductScreen from './src/screens/AllProductScreen';
+import AllOrderScreen from './src/screens/AllOrderScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,7 +46,7 @@ export default function App() {
           <Stack.Screen name="CartScreen" component={CartScreen} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="OrderSuccessScreen" component={OrderSuccessScreen} />
-          <Stack.Screen name="AllProductScreen" component={AllProductScreen} />
+          <Stack.Screen name="AllOrderScreen" component={AllOrderScreen} />
 
         </Stack.Navigator>
       </NavigationContainer>

@@ -43,7 +43,7 @@ export default function LandingScreen({ navigation }) {
     }
 
     const signUpProcess = () => {
-        console.log("asd" + uuid + typeof (uuid))
+        // console.log("asd" + uuid + typeof (uuid))
         email === "" || password === "" || name === "" ? setIsValid(value => false) :
             auth()
                 .createUserWithEmailAndPassword(email, password)
@@ -62,7 +62,7 @@ export default function LandingScreen({ navigation }) {
             height: DIMENSION.height,
             alignItems: 'center'
         }}>
-            {console.log(uuid)}
+            {/* {console.log(uuid)} */}
             <StatusBar hidden />
             <Text style={{
                 fontFamily: "Saol",
@@ -100,7 +100,7 @@ export default function LandingScreen({ navigation }) {
                                 onChangeValue={setPassword}
                                 isSecureTextEntry={true}
                                 placeholder={EN_TEXT.PASSWORD} />
-                            {console.log(email, password)}
+                            {/* {console.log(email, password)} */}
                             <View style={{ height: 80, width: 40 }} />
                             <CustomButton
                                 style={{ width: DIMENSION.width - 48 * 2 }}
