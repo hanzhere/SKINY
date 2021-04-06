@@ -24,7 +24,7 @@ export default function ForYouScreen({ navigation, route }) {
                 }}>{EN_TEXT.FOR_YOU}</Text>
             </View>
             <View style={{ width: DIMENSION.width, flex: 1 }}>
-                <Image style={{ width: "100%", height: "100%", borderTopLeftRadius: 24, borderTopRightRadius: 24 }} source={{ uri: "https://www.sesderma.com/on/demandware.static/-/Sites-Sesderma_USA-Library/default/dw4981e2c1/category_slider/Bloque_Categorias_PielSensible.jpg" }} />
+                <Image style={{ width: "100%", height: "100%", borderTopLeftRadius: 24, borderTopRightRadius: 24 }} source={{ uri: "https://www.sesderma.com/on/demandware.static/-/Sites-Sesderma_USA-Library/default/dw4981e2c1/category_slider/Bloque_Categorias_PielSensible.jpg" }} resizeMode="cover" />
                 <View style={{
                     width: DIMENSION.width,
                     height: 168 + 24 * 2,

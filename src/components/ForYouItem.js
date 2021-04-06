@@ -28,7 +28,7 @@ const ForYouItem = ({ item, index }) => {
                 <Text style={{
                     fontFamily: "Saol",
                     fontSize: 16,
-                    color: COLOR.BLACK
+                    color: COLOR.WHITE
 
                 }}>{item.product_name}</Text>
                 <Text style={{
@@ -39,12 +39,11 @@ const ForYouItem = ({ item, index }) => {
                 <Text style={{
                     fontFamily: "Saol",
                     fontSize: 12,
-                    color: COLOR.BLACK,
-                    marginBottom: 12
+                    color: COLOR.WHITE,
                 }}>{item.product_price} VND</Text>
-                <TouchableOpacity style={{ height: 32, width: "85%", position: 'absolute', right: 0, bottom: 0, backgroundColor: COLOR.GREEN, justifyContent: 'center', alignItems: 'center', borderRadius: 24 }}>
+                {/* <TouchableOpacity style={{ height: 32, width: "85%", position: 'absolute', right: 0, bottom: 0, backgroundColor: COLOR.GREEN, justifyContent: 'center', alignItems: 'center', borderRadius: 24 }}>
                     <Text style={{ fontFamily: 'Saol', fontSize: 12, color: COLOR.WHITE }}>Add to cart</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )

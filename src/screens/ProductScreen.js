@@ -299,9 +299,9 @@ export default function ProductScreen({ navigation, route }) {
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
             <View style={{ width: "100%", paddingLeft: 24, paddingRight: 24, paddingBottom: 24, paddingTop: 24, alignItems: 'center' }}>
-                <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24 }}
+                <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24, zIndex: 999, width: 40, height: 40, backgroundColor: COLOR.WHITE, borderRadius: 24, justifyContent: 'center', alignItems: 'center' }}
                     onPress={() => navigation.goBack('HomeScreen')}>
-                    <Image source={require('../images/back_btn.png')} style={{ width: 10, height: 18 }} />
+                    <Image source={require('../images/back_btn.png')} style={{ width: 10, height: 18, marginRight: 2 }} />
                 </TouchableOpacity>
                 <Text style={{
                     fontSize: 32,

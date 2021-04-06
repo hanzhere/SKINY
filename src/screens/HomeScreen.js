@@ -15,7 +15,7 @@ export default function HomeScreen({ navigation }) {
     const [forYourProductList, setForYourProductList] = useState([])
     const [sales, setSales] = useState([])
     const [username, setUsername] = useState("")
-    const [diaries, setDiaries] = useState([])
+
     const [cart, setCart] = useState([])
 
     const getProduct = async () => {
@@ -47,13 +47,6 @@ export default function HomeScreen({ navigation }) {
         })
     }
 
-    const getDiaries = () => {
-        db.ref(`users/${auth().currentUser.uid}/diaries`).on('value', snap => {
-            let data = snap.val() ? snap.val() : {};
-            setDiaries(() => Object.values(data))
-        })
-    }
-
     const getSales = () => {
         db.ref('sales/').once('value', snapshot => {
             setSales(() => snapshot.val())
@@ -61,7 +54,7 @@ export default function HomeScreen({ navigation }) {
     }
 
     const backAction = () => {
-        Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+        Alert.alert('Hold on!', 'Are you sure you want to go exit?', [
             {
                 text: 'Cancel',
                 onPress: () => null,
@@ -82,7 +75,6 @@ export default function HomeScreen({ navigation }) {
         getProduct()
         getSales()
         getUsername()
-        getDiaries()
         getCart()
         return () => backHandler.remove()
     }, []);
@@ -156,7 +148,6 @@ export default function HomeScreen({ navigation }) {
                     </View>
 
                     <TouchableOpacity style={{
-                        // width: DIMENSION.width - 24 * 2,
                         height: 165,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -212,7 +203,7 @@ export default function HomeScreen({ navigation }) {
                                 height: 184
                             }}>
                                 {/* <Image source={{ uri: sales?.images }} style={{ width: "100%", height: "100%" }} resizeMode="cover" /> */}
-                                <Image source={require('../images/sale.jpg')} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" />
+                                <Image source={{ uri: sales?.images }} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" />
 
                             </View>
 
@@ -243,7 +234,7 @@ export default function HomeScreen({ navigation }) {
 
                     </View>
                 </ScrollView>
-            ) : <ProfileScreen username={username} diaries={diaries} />}
+            ) : <ProfileScreen username={username} />}
 
             <View style={{ position: 'absolute', bottom: 24, width: DIMENSION.width }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>

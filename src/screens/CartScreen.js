@@ -53,7 +53,7 @@ export default function CartScreen({ navigation }) {
             phone: phone,
             name: name,
             address: address
-        }).then(() => db.ref(`users/${auth().currentUser.uid}/cart`).remove().then(() => console.log("removed")))
+        }).then(() => db.ref(`users/${auth().currentUser.uid}/cart`).remove())
             .then(() => navigation.navigate("OrderSuccessScreen"))
     }
 
@@ -82,7 +82,7 @@ export default function CartScreen({ navigation }) {
                         <CartItem key={i} productName={e.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} />
                     ))
                 ) : null}
-                {console.log(cartList)}
+                {/* {console.log(cartList)} */}
 
                 <View style={{ width: 10, height: 40 }} />
             </ScrollView>
