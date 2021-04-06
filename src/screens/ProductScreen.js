@@ -296,13 +296,8 @@ export default function ProductScreen({ navigation, route }) {
         setPageIndex(1)
     }
 
-    const handlePage3 = () => {
-        setPageIndex(2)
-    }
-
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
-            {console.log(sales)}
             <View style={{ width: "100%", paddingLeft: 24, paddingRight: 24, paddingBottom: 24, paddingTop: 24, alignItems: 'center' }}>
                 <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24 }}
                     onPress={() => navigation.goBack('HomeScreen')}>
@@ -364,26 +359,26 @@ export default function ProductScreen({ navigation, route }) {
                                 })}
                             >
                                 {index == 1 ? <View style={{ width: 10, height: 20 }} /> : null}
-                                <Image style={{ height: 210 }} source={{ uri: item.product_image }} resizeMode="cover" />
+                                <Image style={{ height: 210, borderRadius: 24 }} source={{ uri: item.product_image }} resizeMode="cover" />
                                 <View style={{
                                     position: 'absolute',
                                     padding: 12,
                                     bottom: index % 2 === 0 ? 20 : 0
                                 }}>
-                                    <Text style={{ fontFamily: "Saol", fontSize: 16 }}>
+                                    <Text style={{ fontFamily: "Saol", fontSize: 16, color: COLOR.WHITE }} numberOfLines={1}>
                                         {item.product_name}
                                     </Text>
-                                    <Text numberOfLines={1} style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.GRAY }}>
+                                    {/* <Text numberOfLines={1} style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.GRAY }}>
                                         {item.product_describe}
-                                    </Text>
-                                    <Text numberOfLines={1} style={{ fontFamily: "Saol", fontSize: 12 }}>
+                                    </Text> */}
+                                    <Text numberOfLines={1} style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.WHITE }} numberOfLines={1}>
                                         {item.product_price} VND
                                     </Text>
                                 </View>
                                 {pageIndex === 1 ?
                                     <View style={{
                                         padding: 4, paddingRight: 8, paddingLeft: 8,
-                                        backgroundColor: COLOR.BROWN, position: "absolute", top: index !== 0 && index % 2 === 0 ? 20 : 20, right: 0
+                                        backgroundColor: COLOR.BROWN, position: "absolute", top: index % 2 === 0 ? 0 : index > 2 ? 0 : 20, right: 0
                                     }}>
                                         <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.WHITE }}>{item.percent}%</Text>
                                     </View> : null}

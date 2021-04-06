@@ -28,7 +28,7 @@ const CarouselCardItem = ({ item, index }) => {
                 <Text style={{
                     fontFamily: "Saol",
                     fontSize: 24,
-                    color: COLOR.BLACK
+                    color: COLOR.WHITE
 
                 }}>{item.product_name}</Text>
                 <Text style={{
@@ -39,7 +39,7 @@ const CarouselCardItem = ({ item, index }) => {
                 <Text style={{
                     fontFamily: "Saol",
                     fontSize: 16,
-                    color: COLOR.BLACK
+                    color: COLOR.WHITE
                 }}>{item.product_price} VND</Text>
             </View>
         </View>

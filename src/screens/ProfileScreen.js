@@ -5,17 +5,10 @@ import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import CarouselCardItem from '../components/CarouselCardItem'
 import Carousel from 'react-native-snap-carousel'
-import { Modal, ScaleAnimation, ModalContent, ModalTitle } from 'react-native-modals'
+
 import { db, auth } from '../../firebaseConfig'
 import NothingInList from '../components/NothingInList'
 import { useNavigation } from '@react-navigation/native'
-
-const discountData = [
-    { percent: "20%", target: "All product", deadline: "30/2/2020", area: "IN STORE", img: require('../images/sale20.jpg') },
-    { percent: "20%", target: "All product", deadline: "30/2/2020", area: "IN STORE", img: require('../images/sale20.jpg') },
-    { percent: "20%", target: "All product", deadline: "30/2/2020", area: "IN STORE", img: require('../images/sale20.jpg') },
-    { percent: "20%", target: "All product", deadline: "30/2/2020", area: "IN STORE", img: require('../images/sale20.jpg') },
-]
 
 export default function ProfileScreen({ username, diaries }) {
     const isCarousel = useRef(null)
@@ -67,10 +60,6 @@ export default function ProfileScreen({ username, diaries }) {
         <>
             <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }} >
                 <View style={{ width: "100%", paddingLeft: 24, paddingRight: 24, paddingBottom: 24, paddingTop: 24, alignItems: 'center' }}>
-                    <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24 }}
-                        onPress={() => { }}>
-                        <Image source={require('../images/back_btn.png')} style={{ width: 10, height: 18 }} />
-                    </TouchableOpacity>
                     <Text style={{
                         fontSize: 32,
                         fontFamily: "Saol",
@@ -79,27 +68,7 @@ export default function ProfileScreen({ username, diaries }) {
                 </View>
 
                 <ScrollView style={{ marginTop: 12, width: DIMENSION.width, flex: 1 }}>
-                    {console.log(showModal)}
-                    <Modal
-                        onTouchOutside={() => {
-                            setShowModal(() => false)
-                        }}
-                        //width={0.9}
 
-                        modalTitle={
-                            <ModalTitle
-                                title="Modal - Scale Animation"
-                                hasTitleBar={false}
-                            />
-                        }
-                        onSwipeOut={() => setShowModal(() => false)}
-                        visible={showModal}
-
-                    >
-                        <ModalContent>
-                            <Text>aksfjhakjfhaskdhg</Text>
-                        </ModalContent>
-                    </Modal>
 
                     <View style={{ width: DIMENSION.width, }}>
                         {/* {console.log(diaries)} */}
@@ -166,7 +135,7 @@ export default function ProfileScreen({ username, diaries }) {
                             <View key={i} style={{ flexDirection: "row", padding: 12, paddingLeft: 18, backgroundColor: COLOR.GREEN, marginTop: 4, width: "100%", alignItems: 'center', borderRadius: 24 }}>
                                 <Text style={{ fontSize: 12, ...styles.textStyleLight }}>{getTime(e.timestamp)}</Text>
                                 <View style={{ width: 1, height: "100%", backgroundColor: COLOR.WHITE, margin: 4 }} />
-                                <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 70, lineHeight: 14 }}>{e.product_price} VND</Text>
+                                <Text style={{ fontSize: 12, ...styles.textStyleLight, marginRight: 70, lineHeight: 14 }}>{e.product_price + e.delivery_fee} VND</Text>
                                 <Text style={{ fontSize: 10, ...styles.textStyleLight, position: 'absolute', right: 24 }}>{e.status}</Text>
                             </View>
                         )) : <NothingInList width={DIMENSION.width - 24 * 2} height={100} text="No order" style={{ marginTop: 20 }} />}

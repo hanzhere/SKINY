@@ -216,22 +216,24 @@ export default function HomeScreen({ navigation }) {
 
                             </View>
 
-                            <ScrollView horizontal>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                 {sales?.products_sale?.map((e, i) => (
-                                    <View style={{ width: 120, height: 148, marginRight: 8, marginTop: 12, borderRadius: 24 }} key={i}>
-                                        <Image source={{ uri: e?.product_image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" resizeMethod="scale" />
+                                    <TouchableOpacity style={{ width: 120, height: 148, marginRight: 8, marginTop: 12, borderRadius: 24 }} key={i} onPress={() => navigation.navigate('ProductDetailScreen', {
+                                        item: e
+                                    })}>
+                                        <Image source={{ uri: e?.product_image }} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" resizeMethod="scale" />
                                         <View style={{
                                             padding: 12,
                                             position: "absolute",
                                             bottom: 0
                                         }}>
-                                            <Text style={{ fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}>{e?.product_name}</Text>
-                                            <Text style={{ fontFamily: "Saol", fontSize: 10, color: COLOR.BLACK }}>{e?.product_price} VND</Text>
+                                            <Text style={{ fontFamily: "Saol", fontSize: 14, color: COLOR.WHITE }} numberOfLines={1}>{e?.product_name}</Text>
+                                            <Text style={{ fontFamily: "Saol", fontSize: 10, color: COLOR.WHITE }} numberOfLines={1}>{e?.product_price} VND</Text>
                                         </View>
                                         <View style={{ padding: 4, paddingRight: 8, paddingLeft: 8, backgroundColor: COLOR.BROWN, position: "absolute", top: 0, right: 0 }}>
                                             <Text style={{ fontFamily: "Saol", fontSize: 10, color: COLOR.WHITE }}>{e?.percent}%</Text>
                                         </View>
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                                 )}
                             </ScrollView>

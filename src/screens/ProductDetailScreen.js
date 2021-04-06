@@ -40,13 +40,13 @@ export default function ProductDetailScreen({ navigation, route }) {
 
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
-            <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24, zIndex: 999 }}
+            <TouchableOpacity style={{ position: 'absolute', top: 36, left: 24, zIndex: 999, width: 40, height: 40, backgroundColor: COLOR.WHITE, borderRadius: 24, justifyContent: 'center', alignItems: 'center' }}
                 onPress={() => navigation.goBack('HomeScreen')}>
-                <Image source={require('../images/back_btn.png')} style={{ width: 10, height: 18 }} />
+                <Image source={require('../images/back_btn.png')} style={{ width: 10, height: 18, marginRight: 2 }} />
             </TouchableOpacity>
 
             <ScrollView style={{ width: DIMENSION.width, height: DIMENSION.height, zIndex: 0 }}>
-                <Image source={{ uri: item.product_image }} style={{ width: DIMENSION.width, height: DIMENSION.height / 2, marginTop: 36 }} resizeMode='center' />
+                <Image source={{ uri: item.product_image }} style={{ width: DIMENSION.width, height: DIMENSION.height / 2 + 36 }} resizeMode='cover' />
 
                 <View style={styles.section}>
                     <Text style={{ fontFamily: 'Saol', fontSize: 36, color: COLOR.BLACK }} >{item.product_name}</Text>
