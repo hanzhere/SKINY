@@ -1,5 +1,7 @@
 # SKINY's Document
 
+## Phân tích
+
 ## Hướng dẫn cài đặt & chạy ứng dụng
 
 ### Phần mềm yêu cầu
@@ -59,14 +61,19 @@ Sau khi đã cài đặt xong các phần mềm bên trên. Bấm nút `Window` 
     ![skiny](/markdown/10.JPG)
 
 9. Giữ phím `Ctrl`, bấm `` ` `` (nút kế bên số 1)
-   ![skiny](/markdown/11.JPG)
-   _Hiện ra như này_
+
+    ![skiny](/markdown/11.JPG)
+
+    _Hiện ra như này_
+
 10. Bấm vô cửa số bên dưới, gõ `npm instal` > Enter
+
     ![skiny](/markdown/12.JPG)
 
     _Chạy xong nó kiểu kiểu như này_
 
 11. Gõ `expo start` > Enter
+
     ![skiny](/markdown/13.JPG)
 
     _Nó sẽ chạy một tí rồi tự động mở một tab trình duyệt tương tự thế này_
