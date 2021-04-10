@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 
@@ -8,7 +8,7 @@ export const ITEM_WIDTH = DIMENSION.width - 24 * 2 - 40
 
 const CarouselCardItem = ({ item, index }) => {
     return (
-        <View style={styles.container} key={index}>
+        <TouchableOpacity style={styles.container} key={index}>
             <Image
                 source={{ uri: item.product_image }}
                 style={{
@@ -42,7 +42,7 @@ const CarouselCardItem = ({ item, index }) => {
                     color: COLOR.WHITE
                 }}>{item.product_price} VND</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({

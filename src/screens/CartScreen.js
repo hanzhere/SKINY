@@ -9,6 +9,7 @@ import { EN_TEXT } from '../value/strings'
 import { Modalize } from 'react-native-modalize';
 import CustomTextInput from '../components/CustomTextInput'
 import { auth, db } from '../../firebaseConfig'
+import NothingInList from '../components/NothingInList'
 
 export default function CartScreen({ navigation }) {
     const [cartList, setCartList] = useState([])
@@ -16,7 +17,6 @@ export default function CartScreen({ navigation }) {
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
     const [total, setTotal] = useState(0)
-
     const modalizeRef = useRef(null);
 
     const onOpen = () => {
@@ -81,8 +81,7 @@ export default function CartScreen({ navigation }) {
                     cartList.map((e, i) => (
                         <CartItem key={i} productName={e.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} />
                     ))
-                ) : null}
-                {/* {console.log(cartList)} */}
+                ) : <NothingInList text="Nothing here" />}
 
                 <View style={{ width: 10, height: 40 }} />
             </ScrollView>

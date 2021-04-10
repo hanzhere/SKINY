@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { View, Text, StatusBar, TouchableOpacity, TextInput, SafeAreaView, KeyboardAvoidingView } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { View, Text, StatusBar, KeyboardAvoidingView, Alert, TouchableWithoutFeedback, Image } from 'react-native'
 import CustomButton from '../components/CustomButton'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
@@ -14,8 +14,6 @@ export default function LandingScreen({ navigation }) {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isValid, setIsValid] = useState(true)
-    const [uuid, setUuid] = useState("")
 
     const modalizeRef = useRef(null);
 
@@ -43,17 +41,57 @@ export default function LandingScreen({ navigation }) {
     }
 
     const signUpProcess = () => {
-        // console.log("asd" + uuid + typeof (uuid))
-        email === "" || password === "" || name === "" ? setIsValid(value => false) :
-            auth()
-                .createUserWithEmailAndPassword(email, password)
-                .then(() => writeToDB().then(() => navigation.navigate('AddInfoScreen')))
-                .catch(e => console.error(e))
+        email !== "" && password !== "" && name !== "" ? auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => writeToDB().then(() => navigation.navigate('AddInfoScreen')))
+            .catch(e =>
+                Alert.alert('SKINY!', `${e}`, [
+                    {
+                        text: 'Ok',
+                        onPress: () => null,
+                        style: 'cancel',
+                    },
+                ]))
+            : Alert.alert('SKINY!', 'All field must not be empty!', [
+                {
+                    text: 'Ok',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+            ])
     }
 
     const signInProcess = () => {
-        // email === "" || password === "" ? 
-        auth().signInWithEmailAndPassword(email, password).then(() => navigation.navigate('HomeScreen'))
+        email !== "" && password !== "" ?
+            auth().signInWithEmailAndPassword(email, password).then(() => navigation.navigate('HomeScreen')).catch(e =>
+                Alert.alert('SKINY!', `${e}`, [
+                    {
+                        text: 'Ok',
+                        onPress: () => null,
+                        style: 'cancel',
+                    },
+                ]))
+            : Alert.alert('SKINY!', 'Email or password can be empty!', [
+                {
+                    text: 'Ok',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+            ])
+    }
+
+    const forgotPassword = () => {
+        auth().sendPasswordResetEmail(email)
+            .then(function (user) {
+                alert('Please check your email...')
+            }).catch(e =>
+                Alert.alert('SKINY!', `${e}`, [
+                    {
+                        text: 'Ok',
+                        onPress: () => null,
+                        style: 'cancel',
+                    },
+                ]))
     }
 
     return (
@@ -61,14 +99,15 @@ export default function LandingScreen({ navigation }) {
             width: DIMENSION.width,
             height: DIMENSION.height,
             alignItems: 'center'
-        }}>
-            {/* {console.log(uuid)} */}
+        }}
+        >
+            <Image source={require('../images/bg.jpg')} style={{ width: DIMENSION.width, height: DIMENSION.height, position: 'absolute', zIndex: -999 }} resizeMode="cover" />
             <StatusBar hidden />
             <Text style={{
                 fontFamily: "Saol",
-                fontSize: 36,
+                fontSize: 44,
                 marginTop: 102,
-                color: COLOR.BLACK,
+                color: COLOR.WHITE,
                 zIndex: 999
             }}>{EN_TEXT.LOGO_NAME}</Text>
             <Modalize
@@ -80,7 +119,7 @@ export default function LandingScreen({ navigation }) {
                 overlayStyle={{ backgroundColor: isLoginBtnPress ? COLOR.GREEN : COLOR.BROWN, zIndex: -99 }}
             >
                 {isLoginBtnPress ? (
-                    <KeyboardAvoidingView style={{ width: DIMENSION.width, height: DIMENSION.height, }}>
+                    <KeyboardAvoidingView style={{ width: DIMENSION.width }}>
                         <View style={{ marginTop: 80, alignItems: 'center' }}>
                             <Text style={{ fontFamily: "Saol", fontSize: 32, color: COLOR.BROWN }}>{EN_TEXT.WELCOME_BACK}</Text>
                             <View style={{ height: 40, width: 40 }} />
@@ -108,10 +147,13 @@ export default function LandingScreen({ navigation }) {
                                 content={EN_TEXT.SIGN_IN}
                                 color={COLOR.GREEN}
                                 press={() => signInProcess()} />
+                            <TouchableWithoutFeedback onPress={forgotPassword}>
+                                <Text style={{ fontFamily: 'Saol', fontSize: 16, marginTop: 16, color: COLOR.LIGHT_GREEN }}>Forgot password</Text>
+                            </TouchableWithoutFeedback>
                         </View>
                     </KeyboardAvoidingView>
                 ) : (
-                    <KeyboardAvoidingView style={{ width: DIMENSION.width, height: DIMENSION.height, }}>
+                    <KeyboardAvoidingView style={{ width: DIMENSION.width, }}>
                         <View style={{ marginTop: 80, alignItems: 'center' }}>
                             <Text style={{ fontFamily: "Saol", fontSize: 32, color: COLOR.GREEN }}>{EN_TEXT.WELCOME}</Text>
                             <View style={{ height: 40, width: 40 }} />
@@ -161,7 +203,6 @@ export default function LandingScreen({ navigation }) {
                 bottom: 0,
                 padding: 24,
                 justifyContent: "space-between"
-
             }}>
                 <CustomButton press={() => { handleSignInBtnPress() }} content={EN_TEXT.SIGN_IN} color={COLOR.GREEN} contentColor={COLOR.WHITE} />
                 <CustomButton press={() => { handleSignUpBtnPress() }} content={EN_TEXT.SIGN_UP} color={COLOR.GRAY} contentColor={COLOR.BROWN} />

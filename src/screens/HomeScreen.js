@@ -209,9 +209,10 @@ export default function HomeScreen({ navigation }) {
 
                             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                 {sales?.products_sale?.map((e, i) => (
-                                    <TouchableOpacity style={{ width: 120, height: 148, marginRight: 8, marginTop: 12, borderRadius: 24 }} key={i} onPress={() => navigation.navigate('ProductDetailScreen', {
-                                        item: e
-                                    })}>
+                                    <TouchableOpacity style={{ width: 120, height: 148, marginRight: 8, marginTop: 12, borderRadius: 24 }} key={i}
+                                        onPress={() => navigation.navigate('ProductDetailScreen', {
+                                            item: e
+                                        })}>
                                         <Image source={{ uri: e?.product_image }} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" resizeMethod="scale" />
                                         <View style={{
                                             padding: 12,

@@ -35,6 +35,8 @@ export default function AddInfoScreen({ navigation }) {
         { name: "Smaller-looking Pores", isChoose: false, img: require('../images/7.jpg') },
         { name: "Control Oil", isChoose: false, img: require('../images/8.jpg') },
     ])
+    const [image, setImage] = useState(null);
+
     const handleChangeSkinStatus = (i) => {
         let temp = skinStatus
         temp[i].isChoose = !temp[i].isChoose
@@ -51,26 +53,8 @@ export default function AddInfoScreen({ navigation }) {
         setSkinGoals([...temp])
     }
 
+
     const [pageIndex, setPageIndex] = useState(1)
-
-    const [selectedImage, setSelectedImage] = useState(null);
-
-    let openImagePickerAsync = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-        if (permissionResult.granted === false) {
-            alert('Permission to access camera roll is required!');
-            return;
-        }
-
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
-        if (pickerResult.cancelled === true) {
-            return;
-        }
-
-        setSelectedImage({ localUri: pickerResult.uri });
-    };
 
     useEffect(() => {
         pageIndex > 4 ? navigation.navigate("HomeScreen") : null
@@ -92,11 +76,28 @@ export default function AddInfoScreen({ navigation }) {
         db.ref(`users/${uuid}/user_skin`).set({
             skin_status: skinStatusTemp,
             skin_goals: skinGoalsTemp,
-            routines: routinesTemp
+            routines: routinesTemp,
+            message: 'Welcome to SKINY!',
+            user_skin_image: image
         }).then(() => db.ref(`for_user/${uuid}`).set({
             product_id: ['1', '2', '4', '5', '6']
         }).then(() => navigation.navigate('HomeScreen')))
+    }
 
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            // aspect: [4, 3],
+            quality: 1,
+            base64: true
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
     }
 
     return (
@@ -119,7 +120,6 @@ export default function AddInfoScreen({ navigation }) {
                 </TouchableOpacity>
 
             ) : null}
-            {console.log(pageIndex)}
             <View
                 style={{
                     width: DIMENSION.width,
@@ -137,7 +137,7 @@ export default function AddInfoScreen({ navigation }) {
                     1: EN_TEXT.SKIN_STATUS,
                     2: EN_TEXT.SKIN_ROUTINES,
                     3: EN_TEXT.SKIN_GOALS,
-                    4: EN_TEXT.YOUR_SKIN
+                    4: EN_TEXT.SKIN_IMAGE
                 }[pageIndex]}</Text>
 
                 <View style={{
@@ -146,7 +146,7 @@ export default function AddInfoScreen({ navigation }) {
                     marginTop: 100,
                     // backgroundColor: "red"
                 }}>
-                    <ScrollView >
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={{
                             alignItems: 'center'
                         }}>
@@ -221,18 +221,24 @@ export default function AddInfoScreen({ navigation }) {
                                                     color: COLOR.WHITE,
                                                     color: e.isChoose ? COLOR.WHITE : COLOR.GREEN
                                                 }} >{e.name}</Text>
-
                                         </TouchableOpacity>
                                     ))
                                 ),
                                 4: (
-                                    <View style={{ width: "100%", height: "100%", backgroundColor: "red" }}>
+                                    <View style={{ width: DIMENSION.width - 24 * 2, height: DIMENSION.height, alignItems: 'center' }}>
+                                        {!image ? <TouchableOpacity
+                                            style={{ width: 100, height: 100, borderRadius: 24, justifyContent: 'center', alignItems: 'center', marginTop: 200 }}
+                                            onPress={pickImage}
+                                        >
+                                            <Image style={{ width: "100%", height: "100%", borderRadius: 24 }} source={require('../images/camerabackground.jpg')} />
+                                            <Image style={{ width: "40%", height: "40%", position: 'absolute' }} source={require('../images/camera.png')} />
+                                        </TouchableOpacity> : <Image source={{ uri: image }} style={{ width: DIMENSION.width - 24 * 2, height: "100%", borderRadius: 24 }} />}
 
+                                        {/* {image && } */}
                                     </View>
                                 )
                             }[pageIndex]}
                         </View>
-
                     </ScrollView>
                 </View>
 

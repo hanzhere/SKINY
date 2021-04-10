@@ -31,7 +31,7 @@ const AllOrderScreen = ({ route, navigation }) => {
     }
 
     const addReview = (productId) => {
-        db.ref(`products/${productId}/product_reviews/`).push({
+        db.ref(`products/${productId - 1}/product_reviews/`).push({
             name: username,
             comment: review
         })

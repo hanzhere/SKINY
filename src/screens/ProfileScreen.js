@@ -4,7 +4,7 @@ import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import Modal from 'react-native-modal'
-
+import * as ImagePicker from 'expo-image-picker'
 import { db, auth } from '../../firebaseConfig'
 import NothingInList from '../components/NothingInList'
 import { useNavigation } from '@react-navigation/native'
@@ -17,7 +17,7 @@ export default function ProfileScreen({ username }) {
     const [title, setTitle] = useState("")
     const [diaries, setDiaries] = useState([])
     const [content, setContent] = useState("")
-
+    const [image, setImage] = useState(null);
     const navigation = useNavigation();
 
     const toggleModal = () => {
@@ -46,9 +46,9 @@ export default function ProfileScreen({ username }) {
     }
 
     const getMessage = () => {
-        db.ref(`users/${auth().currentUser.uid}/message`).on('value', snap => {
-            let data = snap.val() ? snap.val() : {}
-            setMessage(() => data)
+        db.ref(`users/${auth().currentUser.uid}/user_skin`).on('value', snap => {
+            // let data = snap.val() ? snap.val() : {}
+            setMessage(() => snap.val().message)
         })
     }
 
@@ -76,8 +76,28 @@ export default function ProfileScreen({ username }) {
             date: convetDate,
             month: convetMonth,
             title: title,
-            content: content
+            content: content,
+            image: image
+        }).then(() => {
+            setTitle("")
+            setContent("")
+            toggleModal()
+            setImage(null)
         })
+
+    }
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1,
+            base64: true
+        });
+
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
     }
 
     return (
@@ -97,7 +117,7 @@ export default function ProfileScreen({ username }) {
                     onBackButtonPress={() => toggleModal()}
                 >
                     <View style={{
-                        width: DIMENSION.width - 48 * 2, height: DIMENSION.height - 48 * 4,
+                        width: DIMENSION.width - 48 * 2, height: DIMENSION.height - 48 * 5,
                         backgroundColor: COLOR.WHITE, borderRadius: 24,
                         alignItems: 'center'
                     }}>
@@ -111,11 +131,20 @@ export default function ProfileScreen({ username }) {
                         <TextInput
                             value={content}
                             onChangeText={e => setContent(e)}
-                            placeholder="How's your skin today" style={{ paddingLeft: 24, paddingRight: 24, fontFamily: "Saol", fontSize: 12, color: COLOR.BLACK }}
+                            placeholder="How's your skin today" style={{ paddingLeft: 24, paddingRight: 24, fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK }}
                             selectionColor={COLOR.GREEN}
                             multiline
-                            numberOfLines={20}
+                            numberOfLines={10}
                         />
+
+                        {!image ? <TouchableOpacity
+                            style={{ width: 70, height: 70, borderRadius: 24, justifyContent: 'center', alignItems: 'center' }}
+                            onPress={pickImage}
+                        >
+                            <Image style={{ width: "100%", height: "100%", borderRadius: 24 }} source={require('../images/camerabackground.jpg')} />
+                            <Image style={{ width: "40%", height: "40%", position: 'absolute' }} source={require('../images/camera.png')} />
+                        </TouchableOpacity> : <Image source={{ uri: image }} style={{ width: DIMENSION.width - 48 * 2 - 24 * 2, height: "30%", borderRadius: 24 }} />}
+
                         <TouchableOpacity style={styles.addToDiaryBtn} onPress={handleAddDiary}>
                             <Text style={{ ...styles.textStyle, color: COLOR.WHITE }}>Add today diary</Text>
                         </TouchableOpacity>
@@ -124,9 +153,9 @@ export default function ProfileScreen({ username }) {
 
                 <ScrollView style={{ marginTop: 12, width: DIMENSION.width, flex: 1 }}>
                     <View style={{ width: DIMENSION.width, }}>
-                        <ScrollView horizontal style={{ height: DIMENSION.height / 10 * 6, width: "100%" }} showsHorizontalScrollIndicator={false}>
-                            {diaries.length > 0 ?
-                                diaries.reverse().map((e, i) => (
+                        {diaries.length > 0 ?
+                            <ScrollView horizontal style={{ height: DIMENSION.height / 10 * 6, width: "100%" }} showsHorizontalScrollIndicator={false}>
+                                {diaries.reverse().map((e, i) => (
                                     <View style={{ justifyContent: 'center' }} key={i}>
                                         <View style={{
                                             width: 240,
@@ -136,7 +165,7 @@ export default function ProfileScreen({ username }) {
                                             borderRadius: 24,
                                             backgroundColor: "yellow"
                                         }}>
-                                            <Image source={{ uri: 'https://i.pinimg.com/736x/d6/a9/57/d6a957f1d8045c9c973c12bf5968326f.jpg' }} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" />
+                                            <Image source={{ uri: e.image }} style={{ width: "100%", height: "100%", borderRadius: 24 }} resizeMode="cover" />
                                             <View style={{ width: 75, height: 124, backgroundColor: COLOR.LIGHT_GREEN, position: "absolute", top: 0, left: 0, borderRadius: 24, borderTopRightRadius: 0, alignItems: 'center', justifyContent: "center" }}>
                                                 <Text style={{ fontFamily: "Saol", fontSize: 40, color: COLOR.WHITE, marginBottom: 4 }}>{e.date}</Text>
                                                 <View style={{ width: "60%", height: 1, backgroundColor: COLOR.WHITE }}></View>
@@ -149,9 +178,11 @@ export default function ProfileScreen({ username }) {
                                     </View>
 
                                 ))
-                                :
-                                <NothingInList text="No diary" />}
-                        </ScrollView>
+                                }
+                            </ScrollView>
+                            :
+                            <NothingInList text="No diary" />
+                        }
                     </View>
 
                     <TouchableOpacity
