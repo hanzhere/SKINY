@@ -63,10 +63,10 @@ export default function ProductScreen({ navigation, route }) {
                     marginRight: 24,
                     flex: 1,
                     marginTop: 32,
-                }}>
+                }}>{console.log(products)}
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        data={pageIndex == 0 ? products : pageIndex == 1 ? sales.products_sale : data3}
+                        data={pageIndex == 0 ? products : pageIndex == 1 ? sales.products_sale : null}
                         renderItem={({ item, index }) => (
                             <TouchableOpacity style={{
                                 flex: 1,

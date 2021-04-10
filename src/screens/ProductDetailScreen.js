@@ -31,10 +31,13 @@ export default function ProductDetailScreen({ navigation, route }) {
     }
 
     const addToCart = () => {
-        db.ref(`users/${auth().currentUser.uid}/cart`).push({
+        let newProductKey = db.ref().push().key
+
+        db.ref(`users/${auth().currentUser.uid}/cart/${newProductKey}`).set({
             product: item,
             quantity: quantity,
-            original_price: price
+            original_price: price,
+            key: newProductKey
         }).then(() => console.log('added to cart'))
     }
 

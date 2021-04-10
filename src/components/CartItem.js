@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { COLOR } from '../value/colors'
+import { DIMENSION } from '../value/dimension'
 
 export default function CartItem({ productName, productPrice, quantity, image }) {
     return (
-        <View style={{ width: "100%", flexDirection: "row", backgroundColor: COLOR.GRAY, borderRadius: 24, alignItems: 'center', marginBottom: 4 }}>
+        <View style={{ width: DIMENSION.width - 24 * 2, flexDirection: "row", backgroundColor: COLOR.GRAY, borderRadius: 24, alignItems: 'center', marginBottom: 4, alignSelf: 'center' }}>
             <View style={{ width: 100, height: 100, alignItems: 'center', justifyContent: 'center' }} >
                 <Image source={{ uri: image }} style={{ width: "90%", height: "90%", borderRadius: 20 }} resizeMode="cover" />
             </View>

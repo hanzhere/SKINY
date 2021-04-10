@@ -8,7 +8,7 @@ export const ITEM_WIDTH = DIMENSION.width - 24 * 2 - 40
 
 const CarouselCardItem = ({ item, index }) => {
     return (
-        <TouchableOpacity style={styles.container} key={index}>
+        <View style={styles.container} key={index}>
             <Image
                 source={{ uri: item.product_image }}
                 style={{
@@ -42,7 +42,7 @@ const CarouselCardItem = ({ item, index }) => {
                     color: COLOR.WHITE
                 }}>{item.product_price} VND</Text>
             </View>
-        </TouchableOpacity>
+        </View>
     )
 }
 const styles = StyleSheet.create({

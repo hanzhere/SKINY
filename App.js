@@ -15,6 +15,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import OrderSuccessScreen from './src/screens/OrderSuccessScreen';
 
 import AllOrderScreen from './src/screens/AllOrderScreen';
+import ExploreScreen from './src/screens/ExploreScreen';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,7 @@ export default function App() {
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="OrderSuccessScreen" component={OrderSuccessScreen} />
         <Stack.Screen name="AllOrderScreen" component={AllOrderScreen} />
+        <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>

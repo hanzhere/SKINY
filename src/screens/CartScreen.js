@@ -10,6 +10,8 @@ import { Modalize } from 'react-native-modalize';
 import CustomTextInput from '../components/CustomTextInput'
 import { auth, db } from '../../firebaseConfig'
 import NothingInList from '../components/NothingInList'
+import { SwipeListView } from 'react-native-swipe-list-view'
+
 
 export default function CartScreen({ navigation }) {
     const [cartList, setCartList] = useState([])
@@ -62,6 +64,10 @@ export default function CartScreen({ navigation }) {
         getName()
     }, [])
 
+    const deleteProductFromCart = (key) => {
+        db.ref(`users/${auth().currentUser.uid}/cart/${key}`).remove()
+    }
+
     return (
         <View style={{ width: DIMENSION.width, height: DIMENSION.height, backgroundColor: COLOR.WHITE }}>
             <View style={{ width: "100%", paddingLeft: 24, paddingRight: 24, paddingBottom: 24, paddingTop: 24, alignItems: 'center' }}>
@@ -76,7 +82,7 @@ export default function CartScreen({ navigation }) {
                 }}>{EN_TEXT.CART}</Text>
             </View>
 
-            <ScrollView style={{ width: DIMENSION.width, flex: 1, padding: 24 }}>
+            {/* <ScrollView style={{ width: DIMENSION.width, flex: 1, padding: 24 }}>
                 {cartList.length > 0 ? (
                     cartList.map((e, i) => (
                         <CartItem key={i} productName={e.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} />
@@ -84,7 +90,33 @@ export default function CartScreen({ navigation }) {
                 ) : <NothingInList text="Nothing here" />}
 
                 <View style={{ width: 10, height: 40 }} />
-            </ScrollView>
+            </ScrollView> */}
+
+            {/* {cartList.length > 0 ? (
+               
+                // {/* <CartItem key={i} productName={item.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} /> */}
+
+
+
+            {/* ) : <NothingInList text="Nothing here" />} */}
+            {cartList.length > 0 ? (
+                <SwipeListView
+                    useFlatList
+                    data={cartList}
+                    renderItem={({ item, index }) => (
+                        // console.log(item)
+                        <CartItem key={index} productName={item.product.product_name} productPrice={item.original_price * item.quantity} quantity={item.quantity} image={item.product.product_image} />
+                    )}
+                    renderHiddenItem={({ item, index }) => (
+                        <TouchableOpacity style={styles.rowBack} onPress={() => deleteProductFromCart(item.key)}>
+                            <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
+                                <Text style={{ fontFamily: "Effra", fontSize: 14, color: COLOR.BROWN }}>Delete</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    rightOpenValue={-75}
+                />
+            ) : <NothingInList text="Nothing here" />}
 
             <Modalize
                 ref={modalizeRef}
@@ -121,7 +153,7 @@ export default function CartScreen({ navigation }) {
                         </View>
                     </View>
 
-                    <CustomButton content={EN_TEXT.ORDER} contentColor={COLOR.WHITE} color={COLOR.GREEN} press={() => order()} style={{ position: "absolute", bottom: 0, height: 63 }} />
+                    <CustomButton content={EN_TEXT.ORDER} contentColor={COLOR.WHITE} color={COLOR.GREEN} press={() => order()} style={{ position: "absolute", bottom: 0, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 60 }} />
 
                 </View>
 
@@ -139,5 +171,34 @@ const styles = StyleSheet.create({
     addButtonContainer: { width: 24, height: 24, backgroundColor: COLOR.GRAY, justifyContent: 'center', alignItems: 'center' },
     addButton: { fontFamily: "Saol", fontSize: 16, color: COLOR.BLACK },
     textInput: { marginRight: 24, marginLeft: 24, marginTop: 12 },
-    text: { fontFamily: "Saol", color: COLOR.BLACK }
+    text: { fontFamily: "Saol", color: COLOR.BLACK },
+    backTextWhite: {
+        color: '#FFF',
+    },
+    rowFront: {
+        alignItems: 'center',
+        backgroundColor: '#CCC',
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        justifyContent: 'center',
+        height: 50,
+    },
+    rowBack: {
+        alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+    },
+    backRightBtn: {
+        alignItems: 'center',
+        bottom: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        width: 75,
+    },
+    backRightBtnRight: {
+        right: 24,
+    },
 })

@@ -247,12 +247,18 @@ export default function HomeScreen({ navigation }) {
                         <Image source={require('../images/home.png')} style={{ width: pageIndex === 1 ? 20 : 16, height: pageIndex === 1 ? 20 : 16, }} resizeMode="center" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={pageIndex === 2 ? styles.bottomNavActive : styles.bottomNavInactive} onPress={() => navigation.navigate('CartScreen')}>
+                    <TouchableOpacity style={styles.bottomNavInactive} onPress={() => navigation.navigate('ExploreScreen')}>
+                        <Image source={require('../images/facial-treatment.png')} style={{ width: pageIndex === 2 ? 20 : 16, height: pageIndex === 2 ? 20 : 16, }} resizeMode="center" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.bottomNavInactive} onPress={() => navigation.navigate('CartScreen')}>
                         <Image source={require('../images/bag.png')} style={{ width: pageIndex === 2 ? 20 : 16, height: pageIndex === 2 ? 20 : 16, }} resizeMode="center" />
                         <View style={{ width: 16, height: 16, backgroundColor: COLOR.BROWN, position: "absolute", borderRadius: 24, top: 0, right: -4, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontFamily: "Effra", fontSize: 10, color: COLOR.WHITE, marginBottom: 2 }}>{cart.length}</Text>
                         </View>
                     </TouchableOpacity>
+
+
                 </View>
             </View>
         </View >

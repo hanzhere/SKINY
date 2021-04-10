@@ -17,8 +17,8 @@ export default function ProfileScreen({ username }) {
     const [title, setTitle] = useState("")
     const [diaries, setDiaries] = useState([])
     const [content, setContent] = useState("")
-    const [image, setImage] = useState(null);
-    const navigation = useNavigation();
+    const [image, setImage] = useState(null)
+    const navigation = useNavigation()
 
     const toggleModal = () => {
         setModalVisible(() => !isModalVisible);
