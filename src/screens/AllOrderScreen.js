@@ -13,23 +13,28 @@ const AllOrderScreen = ({ route, navigation }) => {
     const [review, setReview] = useState("")
     const [username, setUsername] = useState("")
 
+    // hàm chuyển timestamp thành thời gian dạng ngày/tháng/năm
     const getTime = (timestamp) => {
         let date = new Date(timestamp)
         return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
     }
 
+    // hàm lấy tên người dùng
     const getUsername = () => {
         db.ref(`users/${auth().currentUser.uid}`).on('value', snapshot => setUsername(() => snapshot.val().user_name))
     }
 
+    // thực hiện lấy tên người dùng ở lần tải trang đầu tiên
     useEffect(() => {
         getUsername()
     }, [])
 
+    // bật tắt trang đánh giá
     const toggleModal = () => {
         setModalVisible(() => !isModalVisible);
     }
 
+    // hàm thêm review vào database
     const addReview = (productId) => {
         db.ref(`products/${productId - 1}/product_reviews/`).push({
             name: username,
@@ -122,7 +127,7 @@ const AllOrderScreen = ({ route, navigation }) => {
                             </View>
 
                         ))
-                        : (<NothingInList text="No order" />)
+                        : (<NothingInList text="No order" />) // nếu không có danh sách order nào thì hiện hình ảnh thông báo là No order
                     }
                 </View>
 

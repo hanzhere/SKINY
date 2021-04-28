@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import CartItem from '../components/CartItem'
 import CustomButton from '../components/CustomButton'
 import { COLOR } from '../value/colors'
@@ -21,17 +21,20 @@ export default function CartScreen({ navigation }) {
     const [total, setTotal] = useState(0)
     const modalizeRef = useRef(null);
 
+    // mở trang điền thông tin giao hàng, mỗi lần mở thì tính lại tổng giá tiền nếu có thay đổi, thêm bớt sản phẩm
     const onOpen = () => {
         modalizeRef.current?.open()
         calcTotal()
     };
 
+    // lấy tên người dùng từ database
     const getName = () => {
         db.ref(`users/${auth().currentUser.uid}`).once('value', snap => {
             setName(() => snap.val().user_name)
         })
     }
 
+    // lấy thông tin giỏ hàng
     const getCart = () => {
         db.ref(`users/${auth().currentUser.uid}/cart`).on('value', snap => {
             let data = snap.val() ? snap.val() : {};
@@ -39,12 +42,14 @@ export default function CartScreen({ navigation }) {
         })
     }
 
+    // tính tổng tiền
     const calcTotal = () => {
         let totalPrice = 0
         cartList.map(e => totalPrice += e.original_price * e.quantity)
         setTotal(totalPrice)
     }
 
+    // thêm order
     const order = () => {
         db.ref(`users/${auth().currentUser.uid}/order`).push({
             timestamp: Date.now(),
@@ -59,11 +64,13 @@ export default function CartScreen({ navigation }) {
             .then(() => navigation.navigate("OrderSuccessScreen"))
     }
 
+    // lấy danh sách giỏ hàng và tên người dùng ở lần chạy đầu tiền
     useEffect(() => {
         getCart()
         getName()
     }, [])
 
+    // xoá sản phẩm khỏi giỏ hàng
     const deleteProductFromCart = (key) => {
         db.ref(`users/${auth().currentUser.uid}/cart/${key}`).remove()
     }
@@ -82,23 +89,6 @@ export default function CartScreen({ navigation }) {
                 }}>{EN_TEXT.CART}</Text>
             </View>
 
-            {/* <ScrollView style={{ width: DIMENSION.width, flex: 1, padding: 24 }}>
-                {cartList.length > 0 ? (
-                    cartList.map((e, i) => (
-                        <CartItem key={i} productName={e.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} />
-                    ))
-                ) : <NothingInList text="Nothing here" />}
-
-                <View style={{ width: 10, height: 40 }} />
-            </ScrollView> */}
-
-            {/* {cartList.length > 0 ? (
-               
-                // {/* <CartItem key={i} productName={item.product.product_name} productPrice={e.original_price * e.quantity} quantity={e.quantity} image={e.product.product_image} /> */}
-
-
-
-            {/* ) : <NothingInList text="Nothing here" />} */}
             {cartList.length > 0 ? (
                 <SwipeListView
                     useFlatList

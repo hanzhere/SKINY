@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import {
+    View, // View
+    Text, // Chữ
+    Image, // Hình ảnh
+    TouchableOpacity, // Nút bấm
+    ScrollView // màn hình có thể kéo xuống được
+} from 'react-native'
 import CustomButton from '../components/CustomButton'
 import { COLOR } from '../value/colors'
 import { DIMENSION } from '../value/dimension'
@@ -8,6 +14,7 @@ import { auth, db } from '../../firebaseConfig'
 import * as ImagePicker from 'expo-image-picker'
 
 export default function AddInfoScreen({ navigation }) {
+    // khoi tao danh sach skin status
     const [skinStatus, setSkinStatus] = useState([
         { name: "Normal Skin", isChoose: false, img: require('../images/11.jpg') },
         { name: "Combanation Skin", isChoose: false, img: require('../images/22.jpg') },
@@ -15,6 +22,8 @@ export default function AddInfoScreen({ navigation }) {
         { name: "Oily Skin", isChoose: false, img: require('../images/44.jpg') },
         { name: "Acne Skin", isChoose: false, img: require('../images/55.jpg') }
     ])
+
+    // khoi tao danh sach routines
     const [routines, setRoutines] = useState([
         { name: "Micellar Water", isChoose: false, img: require('../images/111.jpg') },
         { name: "Cleanser", isChoose: false, img: require('../images/222.jpg') },
@@ -25,6 +34,8 @@ export default function AddInfoScreen({ navigation }) {
         { name: "Sunscreen", isChoose: false, img: require('../images/777.jpg') },
         { name: "Overnight Mask", isChoose: false, img: require('../images/888.jpg') }
     ])
+
+    // khoi tao danh sach skin goals
     const [skinGoals, setSkinGoals] = useState([
         { name: "Less Acnes", isChoose: false, img: require('../images/1.jpg') },
         { name: "Light Skin", isChoose: false, img: require('../images/2.jpg') },
@@ -35,11 +46,15 @@ export default function AddInfoScreen({ navigation }) {
         { name: "Smaller-looking Pores", isChoose: false, img: require('../images/7.jpg') },
         { name: "Control Oil", isChoose: false, img: require('../images/8.jpg') },
     ])
+
+    // khởi tạo biến lưu trữ đường dẫn của ảnh
     const [image, setImage] = useState(null);
 
+    // hàm xử lí khi mỗi skin status được chọn
     const handleChangeSkinStatus = (i) => {
         let temp = skinStatus
         temp[i].isChoose = !temp[i].isChoose
+        // cập nhật lại danh sách sau khi có một hoặc nhiều lựa chọn được chọn
         setSkinStatus([...temp])
     }
     const handleChangeRoutines = (i) => {
@@ -53,26 +68,34 @@ export default function AddInfoScreen({ navigation }) {
         setSkinGoals([...temp])
     }
 
-
+    // khởi tạo giá trị để chuyển lựa chọn, mặc định 1 là skin status
+    // 2 là routines, 3 là skin goals
     const [pageIndex, setPageIndex] = useState(1)
 
     useEffect(() => {
+        // mỗi lần bấm nút NEXT thì giá trị pageIndex tăng lên 1, 
+        // nếu pageIndex > 4 thì chuyển sang trang Homescreen
         pageIndex > 4 ? navigation.navigate("HomeScreen") : null
     }, [pageIndex])
 
+    // nếu bấm nút next thì pageIndex tăng lên 1
     const handleNextBtnPress = () => {
         setPageIndex(pageIndex => pageIndex + 1)
     }
 
+    // pageIndex = 4 thì tiến hành cập nhật danh sách người dùng đã chọn lên database
     const handleDoneBtn = () => {
         let skinStatusTemp = []
         let skinGoalsTemp = []
         let routinesTemp = []
-        let uuid = auth().currentUser.uid
+        let uuid = auth().currentUser.uid // lấy uid của người dùng
+
+        // lọc ra những lựa chọn được người dùng chọn
         skinStatus.filter(e => e.isChoose ? skinStatusTemp.push(e.name) : null)
         skinGoals.filter(e => e.isChoose ? skinGoalsTemp.push(e.name) : null)
         routines.filter(e => e.isChoose ? routinesTemp.push(e.name) : null)
 
+        // cập nhật lên database
         db.ref(`users/${uuid}/user_skin`).set({
             skin_status: skinStatusTemp,
             skin_goals: skinGoalsTemp,
@@ -81,9 +104,10 @@ export default function AddInfoScreen({ navigation }) {
             user_skin_image: image
         }).then(() => db.ref(`for_user/${uuid}`).set({
             product_id: ['1', '2', '4', '5', '6']
-        }).then(() => navigation.navigate('HomeScreen')))
+        }).then(() => navigation.navigate('HomeScreen'))) // sau khi cập nhật xong thì chuyển sang trang homescreen
     }
 
+    // hàm chọn hình ảnh từ điện thoại
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -102,8 +126,8 @@ export default function AddInfoScreen({ navigation }) {
 
     return (
         <>
-            {pageIndex > 1 ? (
-                <TouchableOpacity style={{
+            {pageIndex > 1 ? ( // nếu pageIndex > 2 thì nút quay lại mới xuất hiện
+                <TouchableOpacity style={{ // tạo hình dáng cho nút quay lại
                     width: 30, height: 30,
                     position: 'absolute',
                     top: 36,
@@ -134,6 +158,7 @@ export default function AddInfoScreen({ navigation }) {
                     fontFamily: "Saol",
                     color: COLOR.BLACK
                 }}>{{
+                    // mỗi số tương ứng với pageIndex, 1 thì là dòng chữ "Skin status", 2 thì là dòng chữ "SKin routine", tương tự
                     1: EN_TEXT.SKIN_STATUS,
                     2: EN_TEXT.SKIN_ROUTINES,
                     3: EN_TEXT.SKIN_GOALS,
@@ -152,6 +177,7 @@ export default function AddInfoScreen({ navigation }) {
                         }}>
                             {{
                                 1: (
+                                    // hiện danh sách skinStatus
                                     skinStatus.map((e, i) => (
                                         <TouchableOpacity
                                             style={{
@@ -176,6 +202,7 @@ export default function AddInfoScreen({ navigation }) {
                                     ))
                                 ),
                                 2: (
+                                    // hiện danh sách routine
                                     routines.map((e, i) => (
                                         <TouchableOpacity
                                             style={{
@@ -201,7 +228,7 @@ export default function AddInfoScreen({ navigation }) {
                                     ))
                                 ),
                                 3: (
-                                    skinGoals.map((e, i) => (
+                                    skinGoals.map((e, i) => ( // hiện danh sách skingoals
                                         <TouchableOpacity
                                             style={{
                                                 marginBottom: 8,
