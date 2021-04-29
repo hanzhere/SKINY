@@ -72,7 +72,7 @@ const AllOrderScreen = ({ route, navigation }) => {
                                                 style={{ width: 60, height: 60, borderRadius: 20 }} resizeMode="cover"
                                             />
                                             <View style={{ marginLeft: 10 }}>
-                                                <Text style={{ fontSize: 18, ...styles.textStyle }} numberOfLines={1}>{item.product.product_name}</Text>
+                                                <Text style={{ fontSize: 18, ...styles.textStyle, }} >{item.product.product_name}</Text>
                                                 <Text style={{ fontSize: 14, ...styles.textStyle, color: COLOR.LIGHT_GREEN }}>{item.original_price * item.quantity} VND</Text>
                                             </View>
 
@@ -137,7 +137,7 @@ const AllOrderScreen = ({ route, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    textStyle: { fontFamily: "Saol", color: COLOR.BLACK },
+    textStyle: { fontFamily: "Saol", color: COLOR.BLACK, },
     textStyleEffra: { fontFamily: "Effra", color: COLOR.BLACK },
     addToDiaryBtn: { width: DIMENSION.width - 48 * 2 - 24 * 2, height: 40, backgroundColor: COLOR.LIGHT_GREEN, borderRadius: 24, position: "absolute", bottom: 24, justifyContent: 'center', alignItems: 'center' }
 })

@@ -5,6 +5,7 @@ import { DIMENSION } from '../value/dimension'
 import { EN_TEXT } from '../value/strings'
 import CustomButton from '../components/CustomButton'
 import { auth, db } from '../../firebaseConfig'
+import NothingInList from '../components/NothingInList'
 
 const ReviewItem = ({ name, comment }) => {
     return (
@@ -68,13 +69,12 @@ export default function ProductDetailScreen({ navigation, route }) {
                 </View>
                 <View style={styles.section}>
                     <Text style={{ fontFamily: 'Saol', fontSize: 24, color: COLOR.BLACK }} >{EN_TEXT.REVIEW}</Text>
-                    {Object.keys(item.product_reviews).map((e, i) => (
+                    {item.product_reviews !== undefined ? Object.keys(item.product_reviews).map((e, i) => (
                         <ReviewItem key={i} name={item.product_reviews[e].name} comment={item.product_reviews[e].comment} />
 
-                    ))}
+                    )) : <NothingInList width={200} height={50} text="No review" />}
                     <View style={{ width: 10, height: 120 }} />
                 </View>
-                {Object.keys(item.product_reviews).forEach(e => e != undefined ? console.log(item?.product_reviews[e]?.name, item?.product_reviews[e]?.comment) : null)}
             </ScrollView>
             <View style={{
                 width: DIMENSION.width,
