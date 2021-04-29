@@ -23,7 +23,7 @@ export default function HomeScreen({ navigation }) {
         let list = [];
         let uid = auth().currentUser.uid
 
-        await db.ref('products/').once('value', snapshot => {
+        await db.ref('products/').on('value', snapshot => {
             let arr = snapshot.val()
             productList = arr.filter(function (x) {
                 return x !== undefined;

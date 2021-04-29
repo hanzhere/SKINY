@@ -39,7 +39,7 @@ const AllOrderScreen = ({ route, navigation }) => {
         db.ref(`products/${productId - 1}/product_reviews/`).push({
             name: username,
             comment: review
-        })
+        }).then(() => toggleModal(), setReview(() => ""))
     }
 
     return (
@@ -71,6 +71,7 @@ const AllOrderScreen = ({ route, navigation }) => {
                                             <Image source={{ uri: item.product.product_image }}
                                                 style={{ width: 60, height: 60, borderRadius: 20 }} resizeMode="cover"
                                             />
+                                            {/* {console.log(item.product.product_id)} */}
                                             <View style={{ marginLeft: 10 }}>
                                                 <Text style={{ fontSize: 18, ...styles.textStyle, }} >{item.product.product_name}</Text>
                                                 <Text style={{ fontSize: 14, ...styles.textStyle, color: COLOR.LIGHT_GREEN }}>{item.original_price * item.quantity} VND</Text>
